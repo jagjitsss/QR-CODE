@@ -14,5 +14,9 @@ module.exports.viewUserGet = function (req, res, next) {
     res.render("pages/user/view");
 }
 
+module.exports.trackUserGet = function (req, res, next) {
+    res.render("pages/user/track");
+}
+
 
 
