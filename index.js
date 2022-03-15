@@ -34,4 +34,7 @@ app.post("/scan", (req, res, next) => {
     });
   });
 });
-app.listen(port, console.log(`Listening on port ${port}`));
+var server_port = process.env.PORT || process.env.PORT || 80;
+server.listen(server_port, function() {
+    console.log('Listening on port %d', server_port);
+});
