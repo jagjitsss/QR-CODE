@@ -1,0 +1,50 @@
+<%- include('../layout/header.ejs') %>
+<%- include('../layout/nav.ejs') %>  
+<div id="layoutSidenav">
+    <%- include('../layout/sideBar.ejs') %>
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Setting</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Setting</li>
+                </ol>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            Change Password
+                        </div>
+                       
+                        <div class="card-body">
+                            <form class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="inputCheckpoint" type="TEXT" placeholder="Checkpoint No." />
+                                    <label for="inputCheckpoint">Old Password</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="inputLocation" type="text" placeholder="Location" />
+                                    <label for="inputLocation">New Password</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="inputLocation" type="text" placeholder="Location" />
+                                    <label for="inputLocation">Confirm Password</label>
+                                </div>
+                                
+                              
+                                <div class="mt-4 mb-0">
+                                    <div class="d-grid"><a class="btn btn-primary btn-block" href="">Update Password</a></div>
+                                </div>
+                            </form>
+                         
+                        </div>
+                    </div>
+                </div>
+                <div style="height: 100vh"></div>
+                <div class="card mb-4"><div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</div></div>
+            </div>
+        </main>
+    </div>
+</div>
+<%- include('../layout/footer.ejs') %>

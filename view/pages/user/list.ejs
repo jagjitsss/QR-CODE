@@ -1,0 +1,131 @@
+<%- include('../../layout/header.ejs') %>
+<%- include('../../layout/nav.ejs') %>  
+<div id="layoutSidenav">
+    <%- include('../../layout/sideBar.ejs') %>
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Manage Users</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Users</li>
+                </ol>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="card-header text-right">
+                            <a href="add-user" class="btn btn-primary">Add User</a>
+                        </div>
+                        <div class="card-body">
+                            <table id="datatablesSimple">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Mobile</th>
+                                        <th>Active/Deactive</th>
+                                        <th>Action</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Mobile</th>
+                                        <th>Active/Deactive</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <tr>
+                                        <td>Tiger Nixon</td>
+                                        <td>abc@gmail.com</td>
+                                        <td>9754851223</td>
+                                        <td>
+                                            <input type="checkbox" >
+                                        </td>
+                                        <td>
+                                            <a href="view-user" class="btn btn-warning">View Location</a>
+                                            <a href="edit-user" class="btn btn-primary">Edit</a>
+                                            <a href="#" class="btn btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tiger Nixon</td>
+                                        <td>abc@gmail.com</td>
+                                        <td>9754851223</td>
+                                        <td>
+                                            <input type="checkbox" >
+                                        </td>
+                                        <td>
+                                            <a href="view-user" class="btn btn-warning">View Location</a>
+                                            <a href="edit-user" class="btn btn-primary">Edit</a>
+                                            <a href="#" class="btn btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tiger Nixon</td>
+                                        <td>abc@gmail.com</td>
+                                        <td>9754851223</td>
+                                        <td>
+                                            <input type="checkbox" >
+                                        </td>
+                                        <td>
+                                            <a href="view-user" class="btn btn-warning">View Location</a>
+                                            <a href="edit-user" class="btn btn-primary">Edit</a>
+                                            <a href="#" class="btn btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tiger Nixon</td>
+                                        <td>abc@gmail.com</td>
+                                        <td>9754851223</td>
+                                        <td>
+                                            <input type="checkbox" >
+                                        </td>
+                                        <td>
+                                            <a href="view-user" class="btn btn-warning">View Location</a>
+                                            <a href="edit-user" class="btn btn-primary">Edit</a>
+                                            <a href="#" class="btn btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tiger Nixon</td>
+                                        <td>abc@gmail.com</td>
+                                        <td>9754851223</td>
+                                        <td>
+                                            <input type="checkbox" >
+                                        </td>
+                                        <td>
+                                            <a href="view-user" class="btn btn-warning">View Location</a>
+                                            <a href="edit-user" class="btn btn-primary">Edit</a>
+                                            <a href="#" class="btn btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tiger Nixon</td>
+                                        <td>abc@gmail.com</td>
+                                        <td>9754851223</td>
+                                        <td>
+                                            <input type="checkbox" >
+                                        </td>
+                                        <td>
+                                            <a href="view-user" class="btn btn-warning">View Location</a>
+                                            <a href="edit-user" class="btn btn-primary">Edit</a>
+                                            <a href="#" class="btn btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div style="height: 100vh"></div>
+                <div class="card mb-4"><div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</div></div>
+            </div>
+        </main>
+    </div>
+</div>
+<%- include('../../layout/footer.ejs') %>

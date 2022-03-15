@@ -1,0 +1,139 @@
+<%- include('../../layout/header.ejs') %>
+<%- include('../../layout/nav.ejs') %>  
+<div id="layoutSidenav">
+    <%- include('../../layout/sideBar.ejs') %>
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Manage QR Code</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                    <li class="breadcrumb-item active">QR Codes</li>
+                </ol>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="card-header text-right">
+                            <a href="add-qr-code" class="btn btn-primary">Add QR Code</a>
+                        </div>
+                        <div class="card-body">
+                            <table id="datatablesSimple">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>QR Code.</th>
+                                        <th>Checkpoint No</th>
+                                        <th>Location</th>
+                                        <th>Details</th>
+                                        <th>Action</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>QR Code.</th>
+                                        <th>Checkpoint No.</th>
+                                        <th>Location</th>
+                                        <th>Details</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td><img class="qr_img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAAB0CAYAAABUmhYnAAAAAklEQVR4AewaftIAAAKPSURBVO3BQW7kQAwEwSxC//9y7hx5amAgyWsTjIgfrDGKNUqxRinWKMUapVijFGuUYo1SrFGKNUqxRinWKMUapVijFGuUYo1ycVMSfpJKl4RvqHwjCT9J5Y5ijVKsUYo1ysXDVJ6UhBOVLglvUnlSEp5UrFGKNUqxRrl4WRK+ofKmJJyofCMJ31B5U7FGKdYoxRrl4o9LQqfSJaFTmaxYoxRrlGKNcjGcSpeEE5W/rFijFGuUYo1y8TKV/ykJnUqXhDtUfpNijVKsUYo1ysXDkjBZEn6zYo1SrFGKNUr84A9LwjdUJivWKMUapVijXNyUhE7lG0noVLok3KFykoQ3qZwkoVO5o1ijFGuUYo0SP3hQEu5QuSMJJypdEr6h0iWhU+mS0Km8qVijFGuUYo1y8TCVLgmdykkSTlS6JHQqT1J5UhI6lScVa5RijVKsUeIHNyShU7kjCZ3Kk5JwovKmJHQqTyrWKMUapVijXDwsCZ1Kl4RO5SQJnUqXhDtUuiScqDwpCZ3KHcUapVijFGuU+MEfloQTlS4JJyonSXiSypOKNUqxRinWKBc3JeEnqZyofEPlJAmdSpeEE5UuCW8q1ijFGqVYo1w8TOVJSThR6ZJwonKShJMknKicqLypWKMUa5RijXLxsiR8Q+UbSbgjCXeodEnoVLokdCpPKtYoxRqlWKNc/HEqJ0l4kkqXhE6lS8JJEjqVO4o1SrFGKdYoF+tI5UkqbyrWKMUapVijXLxM5X9S6ZJwovIklZ9UrFGKNUqxRrl4WBJ+UhJOVE5UTpLQqXQqdyShU7mjWKMUa5RijRI/WGMUa5RijVKsUYo1SrFGKdYoxRqlWKMUa5RijVKsUYo1SrFGKdYoxRrlH59V+dIu37fcAAAAAElFTkSuQmCC"></td>
+                                        <td>Sector 20 Checkpoint 1</td>
+                                        <td>Sector 22, Chandigarh</td>
+                                        <td>
+                                            Lorem ipsum, or lipsum as it is sometimes known
+                                        </td>
+                                        <td>
+                                            <!-- <a href="view-user" class="btn btn-warning">View Location</a> -->
+                                            <a href="edit-qr-code" class="btn btn-primary">Edit</a>
+                                            <a href="#" class="btn btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td><img class="qr_img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAAB0CAYAAABUmhYnAAAAAklEQVR4AewaftIAAAKPSURBVO3BQW7kQAwEwSxC//9y7hx5amAgyWsTjIgfrDGKNUqxRinWKMUapVijFGuUYo1SrFGKNUqxRinWKMUapVijFGuUYo1ycVMSfpJKl4RvqHwjCT9J5Y5ijVKsUYo1ysXDVJ6UhBOVLglvUnlSEp5UrFGKNUqxRrl4WRK+ofKmJJyofCMJ31B5U7FGKdYoxRrl4o9LQqfSJaFTmaxYoxRrlGKNcjGcSpeEE5W/rFijFGuUYo1y8TKV/ykJnUqXhDtUfpNijVKsUYo1ysXDkjBZEn6zYo1SrFGKNUr84A9LwjdUJivWKMUapVijXNyUhE7lG0noVLok3KFykoQ3qZwkoVO5o1ijFGuUYo0SP3hQEu5QuSMJJypdEr6h0iWhU+mS0Km8qVijFGuUYo1y8TCVLgmdykkSTlS6JHQqT1J5UhI6lScVa5RijVKsUeIHNyShU7kjCZ3Kk5JwovKmJHQqTyrWKMUapVijXDwsCZ1Kl4RO5SQJnUqXhDtUuiScqDwpCZ3KHcUapVijFGuU+MEfloQTlS4JJyonSXiSypOKNUqxRinWKBc3JeEnqZyofEPlJAmdSpeEE5UuCW8q1ijFGqVYo1w8TOVJSThR6ZJwonKShJMknKicqLypWKMUa5RijXLxsiR8Q+UbSbgjCXeodEnoVLokdCpPKtYoxRqlWKNc/HEqJ0l4kkqXhE6lS8JJEjqVO4o1SrFGKdYoF+tI5UkqbyrWKMUapVijXLxM5X9S6ZJwovIklZ9UrFGKNUqxRrl4WBJ+UhJOVE5UTpLQqXQqdyShU7mjWKMUa5RijRI/WGMUa5RijVKsUYo1SrFGKdYoxRqlWKMUa5RijVKsUYo1SrFGKdYoxRrlH59V+dIu37fcAAAAAElFTkSuQmCC"></td>
+                                        <td>Sector 20 Checkpoint 2</td>
+                                        <td>Mohali 11</td>
+                                        <td>
+                                            Lorem ipsum, or lipsum as it is sometimes known
+                                        </td>
+                                        <td>
+                                            <!-- <a href="view-user" class="btn btn-warning">View Location</a> -->
+                                            <a href="edit-qr-code" class="btn btn-primary">Edit</a>
+                                            <a href="#" class="btn btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td><img class="qr_img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAAB0CAYAAABUmhYnAAAAAklEQVR4AewaftIAAAKPSURBVO3BQW7kQAwEwSxC//9y7hx5amAgyWsTjIgfrDGKNUqxRinWKMUapVijFGuUYo1SrFGKNUqxRinWKMUapVijFGuUYo1ycVMSfpJKl4RvqHwjCT9J5Y5ijVKsUYo1ysXDVJ6UhBOVLglvUnlSEp5UrFGKNUqxRrl4WRK+ofKmJJyofCMJ31B5U7FGKdYoxRrl4o9LQqfSJaFTmaxYoxRrlGKNcjGcSpeEE5W/rFijFGuUYo1y8TKV/ykJnUqXhDtUfpNijVKsUYo1ysXDkjBZEn6zYo1SrFGKNUr84A9LwjdUJivWKMUapVijXNyUhE7lG0noVLok3KFykoQ3qZwkoVO5o1ijFGuUYo0SP3hQEu5QuSMJJypdEr6h0iWhU+mS0Km8qVijFGuUYo1y8TCVLgmdykkSTlS6JHQqT1J5UhI6lScVa5RijVKsUeIHNyShU7kjCZ3Kk5JwovKmJHQqTyrWKMUapVijXDwsCZ1Kl4RO5SQJnUqXhDtUuiScqDwpCZ3KHcUapVijFGuU+MEfloQTlS4JJyonSXiSypOKNUqxRinWKBc3JeEnqZyofEPlJAmdSpeEE5UuCW8q1ijFGqVYo1w8TOVJSThR6ZJwonKShJMknKicqLypWKMUa5RijXLxsiR8Q+UbSbgjCXeodEnoVLokdCpPKtYoxRqlWKNc/HEqJ0l4kkqXhE6lS8JJEjqVO4o1SrFGKdYoF+tI5UkqbyrWKMUapVijXLxM5X9S6ZJwovIklZ9UrFGKNUqxRrl4WBJ+UhJOVE5UTpLQqXQqdyShU7mjWKMUa5RijRI/WGMUa5RijVKsUYo1SrFGKdYoxRqlWKMUa5RijVKsUYo1SrFGKdYoxRrlH59V+dIu37fcAAAAAElFTkSuQmCC"></td>
+                                        <td>Sector 20 Checkpoint 3</td>
+                                        <td>Mohali 7 Phase, Sector 6</td>
+                                        <td>
+                                            Lorem ipsum, or lipsum as it is sometimes known
+                                        </td>
+                                        <td>
+                                            <!-- <a href="view-user" class="btn btn-warning">View Location</a> -->
+                                            <a href="edit-qr-code" class="btn btn-primary">Edit</a>
+                                            <a href="#" class="btn btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td><img class="qr_img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAAB0CAYAAABUmhYnAAAAAklEQVR4AewaftIAAAKPSURBVO3BQW7kQAwEwSxC//9y7hx5amAgyWsTjIgfrDGKNUqxRinWKMUapVijFGuUYo1SrFGKNUqxRinWKMUapVijFGuUYo1ycVMSfpJKl4RvqHwjCT9J5Y5ijVKsUYo1ysXDVJ6UhBOVLglvUnlSEp5UrFGKNUqxRrl4WRK+ofKmJJyofCMJ31B5U7FGKdYoxRrl4o9LQqfSJaFTmaxYoxRrlGKNcjGcSpeEE5W/rFijFGuUYo1y8TKV/ykJnUqXhDtUfpNijVKsUYo1ysXDkjBZEn6zYo1SrFGKNUr84A9LwjdUJivWKMUapVijXNyUhE7lG0noVLok3KFykoQ3qZwkoVO5o1ijFGuUYo0SP3hQEu5QuSMJJypdEr6h0iWhU+mS0Km8qVijFGuUYo1y8TCVLgmdykkSTlS6JHQqT1J5UhI6lScVa5RijVKsUeIHNyShU7kjCZ3Kk5JwovKmJHQqTyrWKMUapVijXDwsCZ1Kl4RO5SQJnUqXhDtUuiScqDwpCZ3KHcUapVijFGuU+MEfloQTlS4JJyonSXiSypOKNUqxRinWKBc3JeEnqZyofEPlJAmdSpeEE5UuCW8q1ijFGqVYo1w8TOVJSThR6ZJwonKShJMknKicqLypWKMUa5RijXLxsiR8Q+UbSbgjCXeodEnoVLokdCpPKtYoxRqlWKNc/HEqJ0l4kkqXhE6lS8JJEjqVO4o1SrFGKdYoF+tI5UkqbyrWKMUapVijXLxM5X9S6ZJwovIklZ9UrFGKNUqxRrl4WBJ+UhJOVE5UTpLQqXQqdyShU7mjWKMUa5RijRI/WGMUa5RijVKsUYo1SrFGKdYoxRqlWKMUa5RijVKsUYo1SrFGKdYoxRrlH59V+dIu37fcAAAAAElFTkSuQmCC"></td>
+                                        <td>Sector 20 Checkpoint 4</td>
+                                        <td>Mohali</td>
+                                        <td>
+                                            Lorem ipsum, or lipsum as it is sometimes known
+                                        </td>
+                                        <td>
+                                            <!-- <a href="view-user" class="btn btn-warning">View Location</a> -->
+                                            <a href="edit-qr-code" class="btn btn-primary">Edit</a>
+                                            <a href="#" class="btn btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td><img class="qr_img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAAB0CAYAAABUmhYnAAAAAklEQVR4AewaftIAAAKPSURBVO3BQW7kQAwEwSxC//9y7hx5amAgyWsTjIgfrDGKNUqxRinWKMUapVijFGuUYo1SrFGKNUqxRinWKMUapVijFGuUYo1ycVMSfpJKl4RvqHwjCT9J5Y5ijVKsUYo1ysXDVJ6UhBOVLglvUnlSEp5UrFGKNUqxRrl4WRK+ofKmJJyofCMJ31B5U7FGKdYoxRrl4o9LQqfSJaFTmaxYoxRrlGKNcjGcSpeEE5W/rFijFGuUYo1y8TKV/ykJnUqXhDtUfpNijVKsUYo1ysXDkjBZEn6zYo1SrFGKNUr84A9LwjdUJivWKMUapVijXNyUhE7lG0noVLok3KFykoQ3qZwkoVO5o1ijFGuUYo0SP3hQEu5QuSMJJypdEr6h0iWhU+mS0Km8qVijFGuUYo1y8TCVLgmdykkSTlS6JHQqT1J5UhI6lScVa5RijVKsUeIHNyShU7kjCZ3Kk5JwovKmJHQqTyrWKMUapVijXDwsCZ1Kl4RO5SQJnUqXhDtUuiScqDwpCZ3KHcUapVijFGuU+MEfloQTlS4JJyonSXiSypOKNUqxRinWKBc3JeEnqZyofEPlJAmdSpeEE5UuCW8q1ijFGqVYo1w8TOVJSThR6ZJwonKShJMknKicqLypWKMUa5RijXLxsiR8Q+UbSbgjCXeodEnoVLokdCpPKtYoxRqlWKNc/HEqJ0l4kkqXhE6lS8JJEjqVO4o1SrFGKdYoF+tI5UkqbyrWKMUapVijXLxM5X9S6ZJwovIklZ9UrFGKNUqxRrl4WBJ+UhJOVE5UTpLQqXQqdyShU7mjWKMUa5RijRI/WGMUa5RijVKsUYo1SrFGKdYoxRqlWKMUa5RijVKsUYo1SrFGKdYoxRrlH59V+dIu37fcAAAAAElFTkSuQmCC"></td>
+                                        <td>Sector 20 Checkpoint 5</td>
+                                        <td>Chandigarh</td>
+                                        <td>
+                                            Lorem ipsum, or lipsum as it is sometimes known
+                                        </td>
+                                        <td>
+                                            <!-- <a href="view-user" class="btn btn-warning">View Location</a> -->
+                                            <a href="edit-qr-code" class="btn btn-primary">Edit</a>
+                                            <a href="#" class="btn btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td><img class="qr_img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAAB0CAYAAABUmhYnAAAAAklEQVR4AewaftIAAAKPSURBVO3BQW7kQAwEwSxC//9y7hx5amAgyWsTjIgfrDGKNUqxRinWKMUapVijFGuUYo1SrFGKNUqxRinWKMUapVijFGuUYo1ycVMSfpJKl4RvqHwjCT9J5Y5ijVKsUYo1ysXDVJ6UhBOVLglvUnlSEp5UrFGKNUqxRrl4WRK+ofKmJJyofCMJ31B5U7FGKdYoxRrl4o9LQqfSJaFTmaxYoxRrlGKNcjGcSpeEE5W/rFijFGuUYo1y8TKV/ykJnUqXhDtUfpNijVKsUYo1ysXDkjBZEn6zYo1SrFGKNUr84A9LwjdUJivWKMUapVijXNyUhE7lG0noVLok3KFykoQ3qZwkoVO5o1ijFGuUYo0SP3hQEu5QuSMJJypdEr6h0iWhU+mS0Km8qVijFGuUYo1y8TCVLgmdykkSTlS6JHQqT1J5UhI6lScVa5RijVKsUeIHNyShU7kjCZ3Kk5JwovKmJHQqTyrWKMUapVijXDwsCZ1Kl4RO5SQJnUqXhDtUuiScqDwpCZ3KHcUapVijFGuU+MEfloQTlS4JJyonSXiSypOKNUqxRinWKBc3JeEnqZyofEPlJAmdSpeEE5UuCW8q1ijFGqVYo1w8TOVJSThR6ZJwonKShJMknKicqLypWKMUa5RijXLxsiR8Q+UbSbgjCXeodEnoVLokdCpPKtYoxRqlWKNc/HEqJ0l4kkqXhE6lS8JJEjqVO4o1SrFGKdYoF+tI5UkqbyrWKMUapVijXLxM5X9S6ZJwovIklZ9UrFGKNUqxRrl4WBJ+UhJOVE5UTpLQqXQqdyShU7mjWKMUa5RijRI/WGMUa5RijVKsUYo1SrFGKdYoxRqlWKMUa5RijVKsUYo1SrFGKdYoxRrlH59V+dIu37fcAAAAAElFTkSuQmCC"></td>
+                                        <td>Sector 20 Checkpoint 6</td>
+                                        <td>Chandigarh International Airport</td>
+                                        <td>
+                                            Lorem ipsum, or lipsum as it is sometimes known
+                                        </td>
+                                        <td>
+                                            <!-- <a href="view-user" class="btn btn-warning">View Location</a> -->
+                                            <a href="edit-qr-code" class="btn btn-primary">Edit</a>
+                                            <a href="#" class="btn btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div style="height: 100vh"></div>
+                <div class="card mb-4"><div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</div></div>
+            </div>
+        </main>
+    </div>
+</div>
+<%- include('../../layout/footer.ejs') %>
