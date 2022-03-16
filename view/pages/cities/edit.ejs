@@ -1,0 +1,37 @@
+<%- include('../../layout/header.ejs') %>
+<%- include('../../layout/nav.ejs') %>  
+<div id="layoutSidenav">
+    <%- include('../../layout/sideBar.ejs') %>
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Edit City</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="/cities">Manage Cities</a></li>
+                    <li class="breadcrumb-item active">Edit City</li>
+                </ol>
+                <div class="card mb-4">
+                    <div class="card-body">
+                       
+                        <div class="card-body">
+                            <form class="col-md-6" action="/edit-city" method="post">
+                                <% for (var i = 0; i < city.length; i++) { %>
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" value="<%= city[i].city %>" name="city" id="city" type="text" placeholder="City" required/>
+                                        <input  value="<%= city[i].id %>" name="id" id="id" type="hidden"  />
+                                        <label for="inputEmail">City</label>
+                                    </div>
+                                <% } %>    
+                                <div class="mt-4 mb-0">
+                                    <div class="d-grid"><button type="submit" class="btn btn-primary btn-block" >Update</button></div>
+                                </div>
+                            </form>
+                         
+                        </div>
+                    </div>
+                </div>
+                </div>
+        </main>
+    </div>
+</div>
+<%- include('../../layout/footer.ejs') %>

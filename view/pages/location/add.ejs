@@ -1,0 +1,43 @@
+<%- include('../../layout/header.ejs') %>
+<%- include('../../layout/nav.ejs') %>  
+<div id="layoutSidenav">
+    <%- include('../../layout/sideBar.ejs') %>
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Add Location</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="/locations">Manage Locations</a></li>
+                    <li class="breadcrumb-item active">Add Location</li>
+                </ol>
+                <div class="card mb-4">
+                    <div class="card-body">
+                       
+                        <div class="card-body">
+                            <form class="col-md-6" action="/add-location" method="post">
+                                <div class="form-floating mb-3">
+                                    <select class="form-control" name="city_id" required>
+                                        <option value="">Select City</option>
+                                        <% for (var i = 0; i < cities.length; i++) { %>
+                                          <option value="<%= cities[i].id %>"><%= cities[i].city %></option>
+                                        <% } %>  
+                                    </select>
+                                    <label for="inputEmail">Select City</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" name="location" id="inputLocation" type="text" placeholder="Location" required/>
+                                    <label for="inputEmail">Location</label>
+                                </div>
+                                <div class="mt-4 mb-0">
+                                    <div class="d-grid"><button type="submit" class="btn btn-primary btn-block">Save</button></div>
+                                </div>
+                            </form>
+                         
+                        </div>
+                    </div>
+                </div>
+               </div>
+        </main>
+    </div>
+</div>
+<%- include('../../layout/footer.ejs') %>

@@ -14,33 +14,39 @@
                     <div class="card-body">
                        
                         <div class="card-body">
-                            <form class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    <input class="form-control" id="inputCheckpoint" type="TEXT" placeholder="Checkpoint No." />
-                                    <label for="inputCheckpoint">Checkpoint No</label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <input class="form-control" id="inputLocation" type="text" placeholder="Location" />
-                                    <label for="inputLocation">Location</label>
-                                </div>
+                            <form class="col-md-6" action="/update-qr-code" method="post">
+                                <% for (var i = 0; i < QrCodes.length; i++) { %>
+                                    <input type="hidden" value="<%= QrCodes[i].id %>" name="id" id="id">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-control" name="checkpoint_id" required>
+                                            <option value="">Select Checkpoint</option>
+                                            <% for (var j = 0; j < checkpoint.length; j++) { %>
+                                            <option value="<%= checkpoint[j].id %>" <%= checkpoint[j].id == QrCodes[i].checkpoint_id ? 'selected' :''  %>><%= checkpoint[j].checkpoint  %>-<%= checkpoint[j].checkpoint_no  %></option>
+                                            <% } %>  
+                                        </select>
+                                        <label for="inputCheckpoint">Checkpoint No</label>
+                                    </div>
+                                    <input type="hidden" value="<%= QrCodes[i].latitude %>" name="latitude" id="latitude">
+                                    <input type="hidden" value="<%= QrCodes[i].lngtitude %>" name="lngtitude" id="lngtitude">
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" value="<%= QrCodes[i].location %>" id="location" name="location" type="text" placeholder="Location" required/>
+                                        <label for="inputLocation">Location</label>
+                                    </div>
 
-                                <div class="form-floating mb-3">
-                                    <textarea class="form-control" id="inputLocation" type="text" placeholder="Details" > </textarea>
-                                    <label for="inputLocation">Details</label>
-                                </div>
-                                
-                              
-                                <div class="mt-4 mb-0">
-                                    <div class="d-grid"><a class="btn btn-primary btn-block" href="qr-codes">Edit QR Code</a></div>
-                                </div>
+                                    <div class="form-floating mb-3">
+                                        <textarea class="form-control" name="details" id="inputdetails" type="text" placeholder="Details" required><%= QrCodes[i].details %></textarea>
+                                        <label for="inputLocation">Details</label>
+                                    </div>
+                                    <div class="mt-4 mb-0">
+                                        <div class="d-grid"><button type="submit" class="btn btn-primary btn-block">Update QR Code</button></div>
+                                    </div>
+                                <% } %>    
                             </form>
                          
                         </div>
                     </div>
                 </div>
-                <div style="height: 100vh"></div>
-                <div class="card mb-4"><div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</div></div>
-            </div>
+                </div>
         </main>
     </div>
 </div>

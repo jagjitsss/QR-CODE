@@ -1,0 +1,58 @@
+<%- include('../../layout/header.ejs') %>
+<%- include('../../layout/nav.ejs') %>  
+<div id="layoutSidenav">
+    <%- include('../../layout/sideBar.ejs') %>
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Edit Checkpoint</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="/checkpoints">Manage Checkpoints</a></li>
+                    <li class="breadcrumb-item active">Edit Checkpoint</li>
+                </ol>
+                <div class="card mb-4">
+                    <div class="card-body">
+                       
+                        <div class="card-body">
+                            <form class="col-md-6" action="/edit-checkpoint" method="post">
+                                <% for (var i = 0; i < checkPoints.length; i++) { %>
+                                    <input  value="<%= checkPoints[i].id%>" name="id" id="id" type="hidden"/>
+                                    <input  value="<%= checkPoints[i].location_id%>" id="location_id_" type="hidden"/>
+                                    <div class="form-floating mb-3">
+                                        <select class="form-control" id="city_id" name="city_id" onchange="getCityLocations()" required>
+                                            <option value="">Select City</option>
+                                            <% for (var j = 0; j < cities.length; j++) { %>
+                                            <option value="<%= cities[j].id %>" <%= (cities[j].id == checkPoints[i].city_id ? 'selected' :'')%>><%= cities[j].city %></option>
+                                            <% } %>  
+                                        </select>
+                                        <label for="inputEmail">Select City</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <select class="form-control" name="location_id" id="location_id" required>
+                                            <option value="">Select Location</option>
+                                        </select>
+                                        <label for="inputEmail">Select Location</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" value="<%= checkPoints[i].checkpoint_no%>" name="checkpoint_no" id="inputCheckpointNo" type="text" placeholder="Checkpoint No" required/>
+                                        <label for="inputEmail">Checkpoint No</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" value="<%= checkPoints[i].checkpoint%>" name="checkpoint" id="inputCheckpoint" type="text" placeholder="Checkpoint" required/>
+                                        <label for="inputEmail">Checkpoint</label>
+                                    </div>
+                                  <% } %>  
+                                
+                                <div class="mt-4 mb-0">
+                                    <div class="d-grid"><button type="submit" class="btn btn-primary btn-block" >Update</button></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </main>
+    </div>
+</div>
+<%- include('../../layout/footer.ejs') %>

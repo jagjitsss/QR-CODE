@@ -14,34 +14,43 @@
                     <div class="card-body">
                        
                         <div class="card-body">
-                            <form class="col-md-6">
+                            <form class="col-md-6" action="/add-qr-code" method="post">
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" id="inputCheckpoint" type="TEXT" placeholder="Checkpoint No." />
+                                    <select class="form-control" name="checkpoint_id" required>
+                                        <option value="">Select Checkpoint</option>
+                                        <% for (var i = 0; i < checkpoint.length; i++) { %>
+                                          <option value="<%= checkpoint[i].id %>"><%= checkpoint[i].checkpoint  %>-<%= checkpoint[i].checkpoint_no  %></option>
+                                        <% } %>  
+                                    </select>
                                     <label for="inputCheckpoint">Checkpoint No</label>
                                 </div>
+                                <input type="hidden" name="latitude" id="latitude">
+                                <input type="hidden" name="lngtitude" id="lngtitude">
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" id="inputLocation" type="text" placeholder="Location" />
+                                    <input class="form-control" id="location" name="location" type="text" placeholder="Location" required/>
                                     <label for="inputLocation">Location</label>
                                 </div>
 
                                 <div class="form-floating mb-3">
-                                    <textarea class="form-control" id="inputLocation" type="text" placeholder="Details" > </textarea>
+                                    <textarea class="form-control" name="details" id="inputdetails" type="text" placeholder="Details" required> </textarea>
                                     <label for="inputLocation">Details</label>
                                 </div>
-                                
-                              
                                 <div class="mt-4 mb-0">
-                                    <div class="d-grid"><a class="btn btn-primary btn-block" href="qr-codes">Create QR Code</a></div>
+                                    <div class="d-grid"><button type="submit" class="btn btn-primary btn-block">Create QR Code</button></div>
                                 </div>
                             </form>
                          
                         </div>
                     </div>
                 </div>
-                <div style="height: 100vh"></div>
-                <div class="card mb-4"><div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</div></div>
-            </div>
+               </div>
         </main>
     </div>
 </div>
+
 <%- include('../../layout/footer.ejs') %>
+
+
+<input type="text" id="address" style="width: 500px;"></input>
+
+        

@@ -3,18 +3,31 @@
         <div class="sb-sidenav-menu">
             <div class="nav">
                 <div class="sb-sidenav-menu-heading">Menu</div>
-                <a class="nav-link" href="/">
+                <a class="nav-link <%= (url == '/') ? 'active' : '' %>" href="/">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                    Dashboard
+                    Dashboard 
                 </a>
                
-                <a class="nav-link" href="users">
+                <a class="nav-link <%= (url == '/users' || url == '/add-user' || url == '/edit-user' || url == '/track-user' || url == '/view-user') ? 'active' : '' %>" href="users">
                     <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                     Manage Users
                 </a>
-                <a class="nav-link" href="qr-codes">
+                <a class="nav-link <%= (url == '/qr-codes' || url == '/add-qr-code' || url == '/edit-qr-code') ? 'active' :'' %>" href="qr-codes">
                     <div class="sb-nav-link-icon"><i class="fas fa-qrcode"></i></div>
                     Manage QR Code
+                </a>
+                <a class="nav-link <%= (url == '/cities' || url == '/add-city' || url == '/edit-city') ? 'active' :'' %>" href="cities">
+                    <div class="sb-nav-link-icon"><i class="fas fa-city"></i></div>
+                    Manage Cities 
+
+                </a>
+                <a class="nav-link <%= (url == '/locations' || url == '/add-location' || url == '/edit-location') ? 'active' :'' %>"" href="locations">
+                    <div class="sb-nav-link-icon"><i class="fas fa-map-marker"></i></div>
+                    Manage locations
+                </a>
+                <a class="nav-link <%= (url == '/checkpoints' || url == '/add-checkpoint' || url == '/edit-checkpoint') ? 'active' :'' %>" href="checkpoints">
+                    <div class="sb-nav-link-icon"><i class="fas fa-map-pin"></i></div>
+                    Manage Checkpoints
                 </a>
             </div>
         </div>

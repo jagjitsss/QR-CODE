@@ -19,6 +19,7 @@
                             <table id="datatablesSimple">
                                 <thead>
                                     <tr>
+                                        <th>#</th>
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Mobile</th>
@@ -37,90 +38,25 @@
                                     </tr>
                                 </tfoot>
                                 <tbody>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>abc@gmail.com</td>
-                                        <td>9754851223</td>
-                                        <td>
-                                            <input type="checkbox" >
-                                        </td>
-                                        <td>
-                                            <a href="track-user" class="btn btn-success">Track</a>
-                                            <a href="view-user" class="btn btn-warning">View Location</a>
-                                            <a href="edit-user" class="btn btn-primary">Edit</a>
-                                            <a href="#" class="btn btn-danger">Delete</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>abc@gmail.com</td>
-                                        <td>9754851223</td>
-                                        <td>
-                                            <input type="checkbox" >
-                                        </td>
-                                        <td>
-                                            <a href="track-user" class="btn btn-success">Track</a>
-                                            <a href="view-user" class="btn btn-warning">View Location</a>
-                                            <a href="edit-user" class="btn btn-primary">Edit</a>
-                                            <a href="#" class="btn btn-danger">Delete</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>abc@gmail.com</td>
-                                        <td>9754851223</td>
-                                        <td>
-                                            <input type="checkbox" >
-                                        </td>
-                                        <td>
-                                            <a href="track-user" class="btn btn-success">Track</a>
-                                            <a href="view-user" class="btn btn-warning">View Location</a>
-                                            <a href="edit-user" class="btn btn-primary">Edit</a>
-                                            <a href="#" class="btn btn-danger">Delete</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>abc@gmail.com</td>
-                                        <td>9754851223</td>
-                                        <td>
-                                            <input type="checkbox" >
-                                        </td>
-                                        <td>
-                                            <a href="track-user" class="btn btn-success">Track</a>
-                                            <a href="view-user" class="btn btn-warning">View Location</a>
-                                            <a href="edit-user" class="btn btn-primary">Edit</a>
-                                            <a href="#" class="btn btn-danger">Delete</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>abc@gmail.com</td>
-                                        <td>9754851223</td>
-                                        <td>
-                                            <input type="checkbox" >
-                                        </td>
-                                        <td>
-                                            <a href="track-user" class="btn btn-success">Track</a>
-                                            <a href="view-user" class="btn btn-warning">View Location</a>
-                                            <a href="edit-user" class="btn btn-primary">Edit</a>
-                                            <a href="#" class="btn btn-danger">Delete</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>abc@gmail.com</td>
-                                        <td>9754851223</td>
-                                        <td>
-                                            <input type="checkbox" >
-                                        </td>
-                                        <td>
-                                            <a href="track-user" class="btn btn-success">Track</a>
-                                            <a href="view-user" class="btn btn-warning">View Location</a>
-                                            <a href="edit-user" class="btn btn-primary">Edit</a>
-                                            <a href="#" class="btn btn-danger">Delete</a>
-                                        </td>
-                                    </tr>
+                                    <% for (var i = 0; i < users.length; i++) { %>
+                                        <tr>
+                                            <td><%= i + 1 %></td>
+                                            <td><%= users[i].name %></td>
+                                            <td><%= users[i].email %></td>
+                                            <td><%= users[i].mobile_no %></td>
+                                            <td>
+                                                <input id="isActive_<%=users[i].id %>" onchange="activeInactive('<%= users[i].id %>')" type="checkbox" <%= users[i].isActive ? 'checked':'' %>
+                                            </td>
+                                            <td>
+                                                <a href="track-user" class="btn btn-success">Track</a>
+                                                <a href="view-user" class="btn btn-warning">View Location</a>
+                                                <a href="edit-user?id=<%= users[i].id %>" class="btn btn-primary">Edit</a>
+                                                <a href="delete-user?id=<%= users[i].id %>"  onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger">Delete</a>
+
+                                            </td>
+                                        </tr>
+                                        <% } %>
+                                   
 
                                     
                                 </tbody>
@@ -128,9 +64,7 @@
                         </div>
                     </div>
                 </div>
-                <div style="height: 100vh"></div>
-                <div class="card mb-4"><div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</div></div>
-            </div>
+                </div>
         </main>
     </div>
 </div>

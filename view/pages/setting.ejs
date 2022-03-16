@@ -18,23 +18,23 @@
                         </div>
                        
                         <div class="card-body">
-                            <form class="col-md-6">
-                                <div class="form-floating mb-3">
+                            <form class="col-md-6" action="/change-password" method="post">
+                                <!-- <div class="form-floating mb-3">
                                     <input class="form-control" id="inputCheckpoint" type="TEXT" placeholder="Checkpoint No." />
                                     <label for="inputCheckpoint">Old Password</label>
+                                </div> -->
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" name="password" id="inputLocation" type="password" required/>
+                                    <label for="inputLocation"> Password</label>
                                 </div>
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" id="inputLocation" type="text" placeholder="Location" />
-                                    <label for="inputLocation">New Password</label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <input class="form-control" id="inputLocation" type="text" placeholder="Location" />
+                                    <input class="form-control" id="inputLocation" type="password"  required/>
                                     <label for="inputLocation">Confirm Password</label>
                                 </div>
                                 
                               
                                 <div class="mt-4 mb-0">
-                                    <div class="d-grid"><a class="btn btn-primary btn-block" href="">Update Password</a></div>
+                                    <div class="d-grid"><button type="submit" class="btn btn-primary btn-block" >Update Password</button></div>
                                 </div>
                             </form>
                          

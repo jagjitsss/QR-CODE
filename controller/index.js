@@ -1,5 +1,10 @@
 module.exports.dashboardGet = function (req, res, next) {
-    res.render("pages/index");
+    var renderPageData = {
+        url:req.url,
+        title:"Dashboard"
+    }
+    
+    res.render("pages/index",renderPageData);
 }
 
 
