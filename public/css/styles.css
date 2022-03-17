@@ -11712,3 +11712,10 @@ body {
 .qr_img {
   height: 58px;
 }
+
+.dataTable-dropdown {
+    display: none;
+}
+.dataTable-search {
+    width: 100%;
+}
