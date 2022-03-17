@@ -20,12 +20,17 @@ module.exports.addQrCodesGet = async function (req, res, next) {
     var query = `SELECT * FROM ??`;
     var table = ["tbl_checkpoint"];
     var dbResponse = await dbQuery.query(query, table);
+
+    var query1 = `SELECT * FROM ?? ORDER BY id DESC`
+    var table1 = [`tbl_cities`];
+    var dbrespCityQ = await dbQuery.query(query1, table1);
     
 
     var renderPageData = {
         url:req.url,
         title:"Manage QR Code",
-        checkpoint:dbResponse
+        checkpoint:dbResponse,
+        cities: dbrespCityQ
     }
     res.render("pages/qr/add", renderPageData);
 }
@@ -40,6 +45,7 @@ module.exports.addQrCodesPost = async function (req, res, next) {
             var query = "INSERT INTO  ?? SET  ?";
             var table = ["tbl_qr_code", req.body];
             var dbResponse = await dbQuery.query(query, table);
+            
             res.redirect('/qr-codes');
          
 

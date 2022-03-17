@@ -49,7 +49,7 @@
                                                 <%= codes[i].details%>
                                             </td>
                                             <td>
-                                                <!-- <a href="view-user" class="btn btn-warning">View Location</a> -->
+                                                <a href="<%= codes[i].qr_code%>" class="btn btn-warning" download>Download</a>
                                                 <a href="edit-qr-code?id=<%= codes[i].id%>" class="btn btn-primary">Edit</a>
                                                 <a href="delete-qr-code?id=<%= codes[i].id %>"  onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger">Delete</a>
                                             </td>

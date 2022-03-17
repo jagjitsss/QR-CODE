@@ -11719,3 +11719,12 @@ body {
 .dataTable-search {
     width: 100%;
 }
+
+.check_point_h {
+    margin: auto;
+    width: 100%;
+    text-align: center;
+}
+.check_point_h p {
+  margin-top: 14px;
+}

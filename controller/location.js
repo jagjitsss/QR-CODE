@@ -87,10 +87,18 @@ module.exports.addLocationsGet = async function (req, res, next) {
 
 
 module.exports.addLocationPost = async function (req, res, next) {
+    console.log(req.body);
+    var data = { city_id: req.body.city_id, location: req.body.location };
     var query = "INSERT INTO  ?? SET  ?";
-    var table = ["tbl_locations", req.body];
+    var table = ["tbl_locations", data];
     var dbResponse = await dbQuery.query(query, table);
-    res.redirect('/locations');
+    //res.redirect('/locations');
+
+    if(req.body.flag == "qr") {
+        res.redirect('/add-qr-code');
+    } else {
+        res.redirect('/locations');
+    }
 }
 
 
@@ -175,9 +183,20 @@ module.exports.addCheckpointGet = async function (req, res, next) {
 
 module.exports.addCheckpointPost = async function (req, res, next) {
     var query = "INSERT INTO  ?? SET  ?";
-    var table = ["tbl_checkpoint", req.body];
+    var data = {
+        city_id: req.body.city_id,
+        location_id: req.body.checkpoint_no,
+        checkpoint_no:req.body.checkpoint_no,
+        checkpoint: req.body.checkpoint
+      }
+    var table = ["tbl_checkpoint", data];
     var dbResponse = await dbQuery.query(query, table);
-    res.redirect('/checkpoints');
+    if(req.body.flag == "qr") {
+        res.redirect('/add-qr-code');
+    } else {
+        res.redirect('/checkpoints');
+    }
+    
 }
 
 
@@ -195,7 +214,6 @@ module.exports.editCheckpointGet = async  function (req, res, next) {
     var query = `SELECT * FROM ?? ORDER BY id DESC`
     var table = [`tbl_cities`];
     var dbrespCity = await dbQuery.query(query, table);
-    console.log(dbrespCheckPoints)
     var renderPageData = {
         url:req.url,
         title:"Manage Checkpoints",

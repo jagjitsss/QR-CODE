@@ -15,20 +15,37 @@
                        
                         <div class="card-body">
                             <form class="col-md-6" action="/add-qr-code" method="post">
+                                <div class="check_point_h">
+                                    <div data-toggle="modal" data-target="#add_checkPoint" data-whatever="@mdo" class="add_check_point btn btn-primary btn-block">
+                                        <i class="fa fa-plus" aria-hidden="true"></i> Add CheckPoint  
+                                    </div>
+                                    <p >Or</p>
+                                </div>  
+                              
+                               
                                 <div class="form-floating mb-3">
+                                    
                                     <select class="form-control" name="checkpoint_id" required>
                                         <option value="">Select Checkpoint</option>
                                         <% for (var i = 0; i < checkpoint.length; i++) { %>
                                           <option value="<%= checkpoint[i].id %>"><%= checkpoint[i].checkpoint  %>-<%= checkpoint[i].checkpoint_no  %></option>
                                         <% } %>  
                                     </select>
-                                    <label for="inputCheckpoint">Checkpoint No</label>
+                                    <label for="inputCheckpoint">Select Checkpoint</label>
                                 </div>
                                 <input type="hidden" name="latitude" id="latitude">
                                 <input type="hidden" name="lngtitude" id="lngtitude">
+
+                                <div class="check_point_h">
+                                    <div data-toggle="modal" data-target="#add_location" data-whatever="@mdo" class="add_check_point btn btn-primary btn-block">
+                                        <i class="fa fa-plus" aria-hidden="true"></i> Add Location  
+                                    </div>
+                                    <p >Or</p>
+                                </div> 
+
                                 <div class="form-floating mb-3">
                                     <input class="form-control" id="location" name="location" type="text" placeholder="Location" required/>
-                                    <label for="inputLocation">Location</label>
+                                    <label for="inputLocation">Choose Location</label>
                                 </div>
 
                                 <div class="form-floating mb-3">
@@ -46,11 +63,98 @@
                </div>
         </main>
     </div>
+
+    <div class="modal fade modal-sm" id="add_checkPoint" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add CheckPoint </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form class="col-md-6" action="/add-checkpoint" method="post">
+                    <input type="hidden" value="qr" name="flag">
+                    <div class="form-floating mb-3">
+                        <select class="form-control" id="city_id" name="city_id" onchange="getCityLocations()" required>
+                            <option value="">Select City</option>
+                            <% for (var i = 0; i < cities.length; i++) { %>
+                              <option value="<%= cities[i].id %>"><%= cities[i].city %></option>
+                            <% } %>  
+                        </select>
+                        <label for="inputEmail">Select City</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select class="form-control" name="location_id" id="location_id" required>
+                            <option value="">Select Location</option>
+                        </select>
+                        <label for="inputEmail">Select Location</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input class="form-control" name="checkpoint_no" id="inputCheckpointNo" type="text" placeholder="Checkpoint No" required/>
+                        <label for="inputEmail">Checkpoint No</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input class="form-control" name="checkpoint" id="inputCheckpoint" type="text" placeholder="Checkpoint" required/>
+                        <label for="inputEmail">Checkpoint</label>
+                    </div>
+                    
+                    <div class="mt-4 mb-0">
+                        <div class="d-grid"><button type="submit" class="btn btn-primary btn-block" >Save</button></div>
+                    </div>
+                </form>
+            </div>
+            <!-- <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Send message</button>
+            </div> -->
+          </div>
+        </div>
+   </div>
+   <div class="modal fade modal-sm" id="add_location" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add CheckPoint </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form class="col-md-6" action="/add-location" method="post">
+                <input type="hidden" value="qr" name="flag">
+
+                <div class="form-floating mb-3">
+                    <select class="form-control" name="city_id" required>
+                        <option value="">Select City</option>
+                        <% for (var i = 0; i < cities.length; i++) { %>
+                          <option value="<%= cities[i].id %>"><%= cities[i].city %></option>
+                        <% } %>  
+                    </select>
+                    <label for="inputEmail">Select City</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" name="location" id="inputLocation" type="text" placeholder="Location" required/>
+                    <label for="inputEmail">Location</label>
+                </div>
+                <div class="mt-4 mb-0">
+                    <div class="d-grid"><button type="submit" class="btn btn-primary btn-block">Save</button></div>
+                </div>
+            </form>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Send message</button>
+        </div> -->
+      </div>
+    </div>
+</div>
 </div>
 
 <%- include('../../layout/footer.ejs') %>
 
 
-<input type="text" id="address" style="width: 500px;"></input>
+
 
         
