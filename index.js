@@ -30,7 +30,7 @@ app.use(session({
     resave: false 
 }));
 app.use(express.static("public"));
-
+app.use('/', [indexRoute,authRoute,userRoute,qrRoute,settingRoute,locationRoute,photosRoute]);
 
 
 var server_port = process.env.PORT || process.env.PORT || 80;
