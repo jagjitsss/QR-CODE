@@ -25,5 +25,6 @@ globalVar.routers.route('/add-checkpoint').post(globalVar.checkLogin, globalVar.
 globalVar.routers.route('/delete-checkpoint').get(globalVar.checkLogin, globalVar.locationImport.deleteCheckpointPost);
 globalVar.routers.route('/edit-checkpoint').post(globalVar.checkLogin, globalVar.locationImport.editCheckpointPost);
 
+globalVar.routers.route('/track-checkpoints').get(globalVar.checkLogin, globalVar.locationImport.trackCheckpoints);
 
 module.exports = globalVar.routers;

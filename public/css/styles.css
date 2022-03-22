@@ -11728,3 +11728,8 @@ body {
 .check_point_h p {
   margin-top: 14px;
 }
+
+
+.cust_input_class {
+  height: 58px!important;
+}

@@ -13,6 +13,7 @@ const qrRoute = require('./routers/qr_router.js');
 const indexRoute = require('./routers/index_router.js');
 const settingRoute = require('./routers/setting_router.js');
 const locationRoute = require('./routers/location_router.js');
+const photosRoute = require('./routers/photos_router.js');
 
 
 app.use(express.json());
@@ -29,7 +30,7 @@ app.use(session({
     resave: false 
 }));
 app.use(express.static("public"));
-app.use('/', [indexRoute,authRoute,userRoute,qrRoute,settingRoute,locationRoute]);
+
 
 
 var server_port = process.env.PORT || process.env.PORT || 80;

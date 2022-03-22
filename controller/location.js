@@ -1,5 +1,5 @@
 var dbQuery = require("../db/dev/dbQuery");
-
+var qrcode = require("qrcode");
 module.exports.citiesGet = async function  (req, res, next) {
     var query = `SELECT * FROM ?? ORDER BY id DESC`
     var table = [`tbl_cities`];
@@ -153,7 +153,7 @@ module.exports.getlocationsGet = async function (req, res, next) {
 
 
 module.exports.checkpointsGet = async function (req, res, next) {
-    var query = `SELECT tbl_checkpoint.*, tbl_locations.location as location, tbl_cities.city as city FROM ?? LEFT JOIN tbl_cities ON tbl_cities.id = tbl_checkpoint.city_id LEFT JOIN tbl_locations on tbl_locations.id = tbl_checkpoint.location_id ORDER BY id DESC`
+    var query = `SELECT tbl_checkpoint.*, tbl_locations.location as location, tbl_cities.city as city FROM ?? LEFT JOIN tbl_cities ON tbl_cities.id = tbl_checkpoint.city_id LEFT JOIN tbl_locations on tbl_locations.id = tbl_checkpoint.location_id ORDER BY checkpoint_no ASC`
     var table = [`tbl_checkpoint`];
     var dbrespCheckPoints = await dbQuery.query(query, table);
 
@@ -173,30 +173,53 @@ module.exports.addCheckpointGet = async function (req, res, next) {
     var table = [`tbl_cities`];
     var dbrespCity = await dbQuery.query(query, table);
 
+    var query1 = `SELECT max(id) as checkpoint_no FROM ??;`
+    var table1 = [`tbl_checkpoint`];
+    var dbrespCheckpointNo = await dbQuery.query(query1, table1);
+
+    var queryU = `SELECT * FROM ?? `;
+    var tableU = ['tbl_user'];
+    var dbResponseUser = await dbQuery.query(queryU, tableU);
+ 
+
     var renderPageData = {
         url:req.url,
         title:"Manage Checkpoints",
-        cities:dbrespCity
+        cities:dbrespCity,
+        checkpoint_no:dbrespCheckpointNo[0]['checkpoint_no'] ? parseInt(dbrespCheckpointNo[0]['checkpoint_no']) + 1 : 1,
+        users:dbResponseUser
     }
     res.render("pages/checkpoints/add", renderPageData);
 }
 
 module.exports.addCheckpointPost = async function (req, res, next) {
-    var query = "INSERT INTO  ?? SET  ?";
-    var data = {
-        city_id: req.body.city_id,
-        location_id: req.body.checkpoint_no,
-        checkpoint_no:req.body.checkpoint_no,
-        checkpoint: req.body.checkpoint
-      }
-    var table = ["tbl_checkpoint", data];
-    var dbResponse = await dbQuery.query(query, table);
-    if(req.body.flag == "qr") {
-        res.redirect('/add-qr-code');
-    } else {
-        res.redirect('/checkpoints');
-    }
+
+    qrcode.toDataURL(JSON.stringify(req.body), async(err, src) => {
+       
+        if (err){
+            res.send("Something went wrong!!");
+        }else {
+            var query = "INSERT INTO  ?? SET  ?";
+            var data = {
+                city_id: req.body.city_id,
+                location_id: req.body.location_id,
+                checkpoint_no:req.body.checkpoint_no,
+                checkpoint_location: req.body.checkpoint_location,
+                user_id: req.body.user_id,
+                latitude: req.body.latitude,
+                lngtitude: req.body.lngtitude,
+                checkpoint_qr_code: src
+            }
+            var table = ["tbl_checkpoint", data];
+            var dbResponse = await dbQuery.query(query, table);
+            if(req.body.flag == "qr") {
+                res.redirect('/add-qr-code');
+            } else {
+                res.redirect('/checkpoints');
+            }
+        }   
     
+   });
 }
 
 
@@ -235,6 +258,14 @@ module.exports.editCheckpointPost = async function (req, res, next) {
     var table = ["tbl_checkpoint", req.body, `id`, req.body.id];
     var dbResponse = await dbQuery.query(query, table);
     res.redirect('/checkpoints');
+}
+
+module.exports.trackCheckpoints = function (req, res, next) {
+    var renderPageData = {
+        url:req.url,
+        title:"Track Checkpoints"
+    }
+    res.render("pages/checkpoints/track-checkpoints",renderPageData);
 }
 
 

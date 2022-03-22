@@ -12,37 +12,87 @@
                 </ol>
                 <div class="card mb-4">
                     <div class="card-body">
+                        
                        
                         <div class="card-body">
-                            <form class="col-md-6" action="/add-checkpoint" method="post">
+                            <form class="col-md-12" action="/add-checkpoint" method="post">
+                                <input type="hidden" name="latitude" id="latitude">
+                                <input type="hidden" name="lngtitude" id="lngtitude">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" value="<%= checkpoint_no %>" name="checkpoint_no" id="inputCheckpointNo" type="text" placeholder="Checkpoint No" readonly/>
+                                            <label for="inputEmail">Checkpoint No</label>
+                                        </div>
+                                    </div>    
+                                    <div class="col-md-6">
+                                        <div class=" mb-3">
+                                            <select class="form-control cust_input_class" id="user_id" name="user_id"  required>
+                                                <option value="">Select User</option>
+                                                <% for (var i = 0; i < users.length; i++) { %>
+                                                   <option value="<%= users[i].id %>"><%= users[i].name %></option>
+                                                <% } %>  
+                                            </select>
+                                          
+                                            <!-- <label for="inputEmail">Select City</label> -->
+                                        </div>
+                                    </div>     
+                                    <div class="col-md-6">
+                                
+                                        <select class="form-control cust_input_class" id="city_id" name="city_id" onchange="getCityLocations()" required>
+                                            <option value="">Select City</option>
+                                            <% for (var i = 0; i < cities.length; i++) { %>
+                                            <option value="<%= cities[i].id %>"><%= cities[i].city %></option>
+                                            <% } %>  
+                                        </select>
+                                    </div>    
+                                    <div class="col-md-6">
+                                        <div class=" mb-3">
+                                           
+                                           
+                                            <div class=" mb-3">
+                                                <select class="form-control cust_input_class" name="location_id" id="location_id" required>
+                                                    <option value="">Select Location</option>
+                                                </select>
+                                                <!-- <label for="inputEmail">Select Location</label> -->
+                                            </div>
+                                            <!-- <label for="inputEmail">Select City</label> -->
+                                        </div>
+                                    </div>    
+                                 </div>   
+                               
+                                
                                 <div class="form-floating mb-3">
-                                    <select class="form-control" id="city_id" name="city_id" onchange="getCityLocations()" required>
-                                        <option value="">Select City</option>
-                                        <% for (var i = 0; i < cities.length; i++) { %>
-                                          <option value="<%= cities[i].id %>"><%= cities[i].city %></option>
-                                        <% } %>  
-                                    </select>
-                                    <label for="inputEmail">Select City</label>
+                                    <input class="form-control " name="checkpoint_location" id="location" type="text" placeholder="Checkpoint" required/>
+                                    <label for="inputEmail">Checkpoint Location</label>
                                 </div>
-                                <div class="form-floating mb-3">
-                                    <select class="form-control" name="location_id" id="location_id" required>
-                                        <option value="">Select Location</option>
-                                    </select>
-                                    <label for="inputEmail">Select Location</label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <input class="form-control" name="checkpoint_no" id="inputCheckpointNo" type="text" placeholder="Checkpoint No" required/>
-                                    <label for="inputEmail">Checkpoint No</label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <input class="form-control" name="checkpoint" id="inputCheckpoint" type="text" placeholder="Checkpoint" required/>
-                                    <label for="inputEmail">Checkpoint</label>
-                                </div>
+                               
+                                    <div id="map_id" style="width:100%;height:300px; display:none;margin-bottom: 15px;" ></div>
+                                    <div class="table">
+                                        <table id="datatablesSimple_" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                  
+                                                    <th>QR Code.</th>
+                                                    <th>Location</th>
+                                                    <th>Action</th>
+                                                    
+                                                </tr>
+                                            </thead>
+                                            
+                                            <tbody id="qr_code_body">
+                                                
+    
+                                            </tbody>
+                                         </table>   
+                                    </div>
                                 
                                 <div class="mt-4 mb-0">
                                     <div class="d-grid"><button type="submit" class="btn btn-primary btn-block" >Save</button></div>
                                 </div>
                             </form>
+                           
                          
                         </div>
                     </div>

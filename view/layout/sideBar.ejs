@@ -12,10 +12,10 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                     Manage Users
                 </a>
-                <a class="nav-link <%= (url == '/qr-codes' || url == '/add-qr-code' || url == '/edit-qr-code') ? 'active' :'' %>" href="qr-codes">
+                <!-- <a class="nav-link <%= (url == '/qr-codes' || url == '/add-qr-code' || url == '/edit-qr-code') ? 'active' :'' %>" href="qr-codes">
                     <div class="sb-nav-link-icon"><i class="fas fa-qrcode"></i></div>
                     Manage QR Code
-                </a>
+                </a> -->
                 <a class="nav-link <%= (url == '/cities' || url == '/add-city' || url == '/edit-city') ? 'active' :'' %>" href="cities">
                     <div class="sb-nav-link-icon"><i class="fas fa-city"></i></div>
                     Manage Cities 
@@ -28,6 +28,11 @@
                 <a class="nav-link <%= (url == '/checkpoints' || url == '/add-checkpoint' || url == '/edit-checkpoint') ? 'active' :'' %>" href="checkpoints">
                     <div class="sb-nav-link-icon"><i class="fas fa-map-pin"></i></div>
                     Manage Checkpoints
+                </a>
+
+                <a class="nav-link <%= (url == '/view-photos' || url == '/add-photos' || url == '/edit-photos') ? 'active' :'' %>" href="view-photos">
+                    <div class="sb-nav-link-icon"><i class="far fa-image"></i></div>
+                    View Photos
                 </a>
             </div>
         </div>

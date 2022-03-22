@@ -1,7 +1,7 @@
 var dbQuery = require("../db/dev/dbQuery");
 var qrcode = require("qrcode");
 module.exports.qrCodesGet = async function (req, res, next) {
-    var query = `SELECT tbl_qr_code.*, tbl_checkpoint.checkpoint_no, tbl_checkpoint.checkpoint FROM ?? LEFT JOIN tbl_checkpoint ON tbl_checkpoint.id = tbl_qr_code.checkpoint_id ORDER BY tbl_qr_code.id DESC`
+    var query = `SELECT tbl_qr_code.*, tbl_checkpoint.checkpoint_no  FROM ?? LEFT JOIN tbl_checkpoint ON tbl_checkpoint.id = tbl_qr_code.checkpoint_id ORDER BY tbl_qr_code.id DESC`
     var table = [`tbl_qr_code`];
     var dbResponse = await dbQuery.query(query, table);
 
@@ -36,17 +36,23 @@ module.exports.addQrCodesGet = async function (req, res, next) {
 }
 
 module.exports.addQrCodesPost = async function (req, res, next) {
+    console.log(req.body)
     qrcode.toDataURL(JSON.stringify(req.body), async(err, src) => {
         console.log(err)
         if (err){
             res.send("Something went wrong!!");
         }else {
-            req.body.qr_code = src;
-            var query = "INSERT INTO  ?? SET  ?";
-            var table = ["tbl_qr_code", req.body];
-            var dbResponse = await dbQuery.query(query, table);
-            
-            res.redirect('/qr-codes');
+           
+             if(req.body.flag == "ajax") {
+                res.send({status:true, data:src})
+             } else {
+                req.body.qr_code = src;
+                var query = "INSERT INTO  ?? SET  ?";
+                var table = ["tbl_qr_code", req.body];
+                var dbResponse = await dbQuery.query(query, table);
+                //res.redirect('/qr-codes');
+
+             }
          
 
         } 
