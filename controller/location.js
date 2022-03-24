@@ -336,6 +336,10 @@ module.exports.deleteCheckpointPost = async function (req, res, next) {
     var query = "DELETE FROM `tbl_checkpoint` WHERE ?? = ?";
     var table = ['id', req.query.id];
     var dbResponse = await dbQuery.query(query, table);
+    var query1 = "DELETE FROM `tbl_checkpoint_qr_code` WHERE ?? = ?";
+    var table1 = ['checkpoint_id', req.query.id];
+
+    var dbResponse = await dbQuery.query(query1, table1);
     res.redirect('/checkpoints');
 }
 

@@ -9,7 +9,7 @@ const indexImport = require('../controller/index.js');
 const settingImport = require('../controller/setting.js');
 const locationImport = require('../controller/location.js');
 const photosImport = require('../controller/photos.js');
-
+const reportsImport = require('../controller/reports.js');
 
 var globalVariable = {};
 globalVariable.routers = routers;
@@ -21,6 +21,7 @@ globalVariable.indexImport = indexImport;
 globalVariable.settingImport = settingImport;
 globalVariable.locationImport = locationImport;
 globalVariable.photosImport = photosImport;
+globalVariable.reportsImport = reportsImport;
 
 
 

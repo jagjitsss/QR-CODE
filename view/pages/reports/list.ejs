@@ -1,0 +1,108 @@
+<%- include('../../layout/header.ejs') %>
+<%- include('../../layout/nav.ejs') %>  
+
+<div id="layoutSidenav">
+    <%- include('../../layout/sideBar.ejs') %>
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Reports</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Reports</li>
+                </ol>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="card-header row">
+                            <div class="row g-2">
+                                <div class="col-md">
+                                    <div class="form-floating">
+                                        <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
+                                          <option selected>Select Vehicle</option>
+                                          <option value="none">None</option>
+                                          <option value="2">PB-AT-87945</option>
+                                          <option value="3">PB-AT-87946</option>
+                                        </select>
+                                        <label for="floatingSelectGrid">vehicle</label>
+                                      </div>
+                                </div>
+                                <div class="col-md">
+                                  <div class="form-floating">
+                                    <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
+                                      <option selected>Select User</option>
+                                      <option value="none">None</option>
+                                      <option value="2">ABC</option>
+                                      <option value="3">XYZ</option>
+                                    </select>
+                                    <label for="floatingSelectGrid">User</label>
+                                  </div>
+                                </div>
+                                <div class="col-md">
+                                    <div class="form-floating">
+                                        <input type="date" class="form-control" id="floatingInputGrid" placeholder="name@example.com" value="mdo@example.com">
+                                        <label for="floatingInputGrid">Date</label>
+                                      </div>
+                                  </div>
+                                  <div class="col-md">
+                                    <div class="form-floating">
+                                      <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
+                                        <option selected>Select Location</option>
+                                        <option value="none">None</option>
+                                        <option value="2">Mohali</option>
+                                        <option value="3">Chandighar</option>
+                                      </select>
+                                      <label for="floatingSelectGrid">Location</label>
+                                    </div>
+                                  </div>
+                              </div>
+                             
+                        </div>
+                     
+                        <div class="card-body">
+                            <div class="card-header text-right">
+                                <a href="#" class="btn btn-primary">Export to excel</a>
+                            </div>
+                            <table id="datatablesSimple_" class="table table-bordered table-responsive-sm">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Checkpoint no</th>
+                                        <th>Date/Time</th>
+                                        <th>Vehicle</th>
+                                        <th>Driver</th>
+                                        <th>Location </th>
+                                        <!-- <th>Action</th> -->
+                                        
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>19</td>
+                                            <td>24-03-2020 11:15 am</td>
+                                            <td>PB-AT-87945</td>
+
+                                            <td>Joni</td>
+                                            <td>Mohali</td>
+                                          
+                                            <!-- <td>
+                                                <a  class="btn btn-warning" >View</a>
+                                                <a  class="btn btn-warning" >Download</a>
+
+                                            </td> -->
+                                        </tr>
+                                
+                                    
+
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                </div>
+        </main>
+    </div>
+</div>
+<%- include('../../layout/footer.ejs') %>
