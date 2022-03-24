@@ -1,0 +1,108 @@
+<%- include('../../layout/header.ejs') %>
+<%- include('../../layout/nav.ejs') %>  
+<div id="layoutSidenav">
+    <%- include('../../layout/sideBar.ejs') %>
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Add Vehicle</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="/vehicle">Vehicles</a></li>
+                    <li class="breadcrumb-item active">Add Vehicle</li>
+                </ol>
+                <div class="card mb-4">
+                    <div class="card-body">
+                       
+                        <div class="card-body">
+                            <form class="col-md-6" action="/add-vehicle" method="post">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3 mb-md-0">
+                                            <input required class="form-control" name="driver_name" id="inputFirstName" type="text" placeholder="Enter your first name" />
+                                            <label for="inputFirstName">Driver Name</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input required class="form-control" name="mobile_no" id="inputmobile_no" type="number" placeholder="Mobile" />
+                                            <label for="inputmobile_no">Mobile Number</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3 mb-md-0">
+                                            <input required class="form-control" name="vehicle_number" id="inputFirstName" type="text" placeholder="Enter your first name" />
+                                            <label for="inputFirstName">Vehicle Number </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <select onchange="selectVehicletype('')" class="form-select" name="vehicle_type" id="Vehicle_Type_" aria-label="Floating label select example">
+                                              <option value="">Select Vehicle Type </option>
+                                              <option value="car">Car</option>
+                                              <option value="truck">Truck</option>
+                                              <option value="van">Van</option>
+                                              <option value="bike">Bike</option>
+                                              <option value="other">Other</option>
+                                            </select>
+                                            <label for="floatingSelect">Vehicle Type</label>
+                                          </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input required class="form-control" name="email" id="inputEmail" type="email" placeholder="name@example.com" />
+                                            <label for="inputEmail">Email address</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <select  class="form-select" name="city_id" id="city_id" aria-label="Floating label select example">
+                                                <option value="">Select City </option>
+                                                <% for (var i = 0; i < cities.length; i++) { %>
+                                                    <option value="<%= cities[i].id %>"><%= cities[i].city %></option>
+                                                <% } %>  
+                                            </select>
+                                            <label for="floatingSelect">Select City</label>
+                                          </div>
+                                    </div>
+                                </div>
+                                <div class="form-floating mb-3" style="display: none;" id="other_vehicle_type">
+                                    <!-- <input required class="form-control" name="other_vehicle_type" id="other_vehicle_type" type="text" placeholder="Other Vehicle Type" />
+                                    <label for="inputEmail">Other Vehicle Type</label> -->
+                                </div>
+                                
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3 mb-md-0">
+                                            <input required class="form-control" name="password" id="inputPassword" type="password" placeholder="Create a password" />
+                                            <label for="inputPassword">Password</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3 mb-md-0">
+                                            <input required class="form-control"  id="inputPasswordConfirm" type="password" placeholder="Confirm password" />
+                                            <label for="inputPasswordConfirm">Confirm Password</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <input  type="checkbox" name="isActive" checked/>
+                                    <label for="inputPasswordConfirm">Active</label>
+                                </div> 
+                                <div class="mt-4 mb-0">
+                                    <div class="d-grid"><button type="submit" class="btn btn-primary btn-block">Create Vehicle </button></div>
+                                </div>
+                            </form>
+                         
+                        </div>
+                    </div>
+                </div>
+               </div>
+        </main>
+    </div>
+</div>
+<%- include('../../layout/footer.ejs') %>

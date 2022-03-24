@@ -36,7 +36,6 @@ module.exports.addQrCodesGet = async function (req, res, next) {
 }
 
 module.exports.addQrCodesPost = async function (req, res, next) {
-    console.log(req.body)
     qrcode.toDataURL(JSON.stringify(req.body), async(err, src) => {
         console.log(err)
         if (err){

@@ -15,7 +15,18 @@
                        
                         <div class="card-body">
                             <form class="col-md-6" action="/add-location" method="post">
+                                <input type="hidden" name="latitude" id="latitude">
+                                <input type="hidden" name="lngtitude" id="lngtitude">
                                 <div class="form-floating mb-3">
+                                    <select class="form-select" name="city_id" id="floatingSelect" aria-label="Floating label select example">
+                                      
+                                      <% for (var i = 0; i < cities.length; i++) { %>
+                                        <option value="<%= cities[i].id %>"><%= cities[i].city %></option>
+                                      <% } %>  
+                                    </select>
+                                    <label for="floatingSelect">Select City</label>
+                                  </div>
+                                <!-- <div class="form-floating mb-3">
                                     <select class="form-control" name="city_id" required>
                                         <option value="">Select City</option>
                                         <% for (var i = 0; i < cities.length; i++) { %>
@@ -23,9 +34,9 @@
                                         <% } %>  
                                     </select>
                                     <label for="inputEmail">Select City</label>
-                                </div>
+                                </div> -->
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" name="location" id="inputLocation" type="text" placeholder="Location" required/>
+                                    <input class="form-control" id="location" name="location" id="inputLocation" type="text" placeholder="Location" required/>
                                     <label for="inputEmail">Location</label>
                                 </div>
                                 <div class="mt-4 mb-0">

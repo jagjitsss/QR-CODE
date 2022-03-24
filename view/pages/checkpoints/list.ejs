@@ -1,11 +1,11 @@
 <%- include('../../layout/header.ejs') %>
 <%- include('../../layout/nav.ejs') %>  
 <style>
-    .dataTable-wrapper.no-footer .dataTable-container {
+    /* .dataTable-wrapper.no-footer .dataTable-container {
         border-bottom: none;
         width: 1500px!important;
         overflow-x:auto;
-    }
+    } */
 </style>
 <div id="layoutSidenav">
     <%- include('../../layout/sideBar.ejs') %>
@@ -28,9 +28,10 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Checkpoint No</th>
-                                        <th>QR Code</th>
+                                        <th>Driver Name</th>
+                                        <!-- <th>QR Code</th>
                                        
-                                        <th>Checkpoint Location</th>
+                                        <th>Checkpoint Location</th> -->
                                         <th>City</th>
                                         <th>Location</th>
                                         <th>Action</th>
@@ -40,8 +41,15 @@
                                 <tfoot>
                                     <tr>
                                         <th>#</th>
-                                        <th>Name</th>
+                                        <th>Checkpoint No</th>
+                                        <th>Driver Name</th>
+                                        <!-- <th>QR Code</th>
+                                       
+                                        <th>Checkpoint Location</th> -->
+                                        <th>City</th>
+                                        <th>Location</th>
                                         <th>Action</th>
+                                        
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -49,13 +57,14 @@
                                         <tr>
                                             <td><%= i + 1 %></td>
                                             <td><%= checkPoints[i].checkpoint_no %></td>
-                                            <td><img class="qr_img" src="<%= checkPoints[i].checkpoint_qr_code%>"></td>
+                                            <td><%= checkPoints[i].driver_name %></td>
+                                            <!-- <td><img class="qr_img" src="<%= checkPoints[i].checkpoint_qr_code%>"></td>
                                           
-                                            <td><%= checkPoints[i].checkpoint_location %></td>
+                                            <td><%= checkPoints[i].checkpoint_location %></td> -->
                                             <td><%= checkPoints[i].city %></td>
                                             <td><%= checkPoints[i].location %></td>
                                             <td>
-                                                <a href="edit-checkpoint?id=<%= checkPoints[i].id %>" class="btn btn-primary">Edit</a>
+                                                <!-- <a href="edit-checkpoint?id=<%= checkPoints[i].id %>" class="btn btn-primary">Edit</a> -->
                                                 <a href="delete-checkpoint?id=<%= checkPoints[i].id %>"  onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger">Delete</a>
 
                                             </td>

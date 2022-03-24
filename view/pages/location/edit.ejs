@@ -15,9 +15,13 @@
                        
                         <div class="card-body">
                             <form class="col-md-6" action="edit-location" method="post">
+                               
                                 <% for (var i = 0; i < locations.length; i++) { %>
+                                    <input type="hidden" name="latitude" id="latitude" value="<%=locations[i].latitude%>">
+                                    <input type="hidden" name="lngtitude" id="lngtitude" value="<%=locations[i].lngtitude%>">
+                                    
                                     <div class="form-floating mb-3">
-                                        <select class="form-control" name="city_id" required>
+                                        <select class="form-select" name="city_id"  aria-label="Floating label select example" required>
                                             <option value="">Select City</option>
                                             <% for (var j = 0; j < cities.length; j++) { %>
                                               <option value="<%= cities[j].id %>" <%= (cities[j].id == locations[i].city_id ? 'selected' :'')%>><%= cities[j].city %></option>
@@ -26,7 +30,7 @@
                                         <label for="inputEmail">Select City</label>
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" value="<%= locations[i].location%>" name="location" id="inputLocation" type="text" placeholder="Location" required/>
+                                        <input id="location" class="form-control" value="<%= locations[i].location%>" name="location" id="inputLocation" type="text" placeholder="Location" required/>
                                         <input  value="<%= locations[i].id%>" name="id" type="hidden"/>
                                         <label for="inputEmail">Location</label>
                                     </div>

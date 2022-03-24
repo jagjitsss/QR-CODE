@@ -88,7 +88,12 @@ module.exports.addLocationsGet = async function (req, res, next) {
 
 module.exports.addLocationPost = async function (req, res, next) {
     console.log(req.body);
-    var data = { city_id: req.body.city_id, location: req.body.location };
+    var data = { 
+        city_id: req.body.city_id,
+        location: req.body.location,
+        latitude: req.body.latitude,
+        lngtitude: req.body.lngtitude,
+     };
     var query = "INSERT INTO  ?? SET  ?";
     var table = ["tbl_locations", data];
     var dbResponse = await dbQuery.query(query, table);
@@ -116,6 +121,7 @@ module.exports.editLocationsGet = async function (req, res, next) {
    var query = `SELECT * FROM ?? ORDER BY id DESC`
    var table = [`tbl_cities`];
    var dbrespCity = await dbQuery.query(query, table);
+
    var renderPageData = {
         url:req.url,
         title:"Manage Locations",
@@ -147,13 +153,19 @@ module.exports.getlocationsGet = async function (req, res, next) {
     var query = `SELECT * FROM tbl_locations where ?? = ?`;
     var table = ['city_id', req.query.city_id];
     var dbResponse = await dbQuery.query(query, table);
-    res.send({status:true,data:dbResponse})
+
+
+    var query1 = `SELECT * FROM tbl_vehicle where ?? = ?`;
+    var table1 = ['city_id', req.query.city_id];
+    var dbResponseVehicle = await dbQuery.query(query1, table1);
+
+    res.send({status:true,location:dbResponse, vehicle:dbResponseVehicle})
 }
 
 
 
 module.exports.checkpointsGet = async function (req, res, next) {
-    var query = `SELECT tbl_checkpoint.*, tbl_locations.location as location, tbl_cities.city as city FROM ?? LEFT JOIN tbl_cities ON tbl_cities.id = tbl_checkpoint.city_id LEFT JOIN tbl_locations on tbl_locations.id = tbl_checkpoint.location_id ORDER BY checkpoint_no ASC`
+    var query = `SELECT tbl_checkpoint.*, tbl_vehicle.driver_name, tbl_locations.location as location, tbl_cities.city as city FROM ?? LEFT JOIN tbl_cities ON tbl_cities.id = tbl_checkpoint.city_id LEFT JOIN tbl_locations on tbl_locations.id = tbl_checkpoint.location_id LEFT JOIN tbl_vehicle on tbl_vehicle.id = tbl_checkpoint.vehicle_id ORDER BY checkpoint_no ASC`
     var table = [`tbl_checkpoint`];
     var dbrespCheckPoints = await dbQuery.query(query, table);
 
@@ -164,6 +176,27 @@ module.exports.checkpointsGet = async function (req, res, next) {
         checkPoints:dbrespCheckPoints
     }
     res.render("pages/checkpoints/list", renderPageData);
+}
+
+module.exports.checkpointsGetById = async function (req, res, next) {
+    console.log(req.query);
+    var query = `SELECT id FROM ??  WHERE ??=? AND ??=? AND ??=?`
+    var table = [`tbl_checkpoint`, `location_id`, req.query.location_id,`city_id`, req.query.city_id,`vehicle_id`, req.query.vehicle_id];
+
+    var dbrespCheckPoints = await dbQuery.query(query, table);
+    if(dbrespCheckPoints.length > 0) {
+        const result = Object.values(JSON.parse(JSON.stringify(dbrespCheckPoints)));
+        var query1 = `SELECT * FROM ?? where  ??= ?`
+        var table1 = [`tbl_checkpoint_qr_code`, `checkpoint_id`, result[0].id];
+        var dbrespCheckPointsCode = await dbQuery.query(query1, table1);
+        console.log(dbrespCheckPointsCode,'dbrespCheckPointsdbrespCheckPointsdbrespCheckPoints');
+        res.send({status:true,data:dbrespCheckPointsCode, checkpoint_id:result[0].id});
+    } else {
+        res.send({status:true,data:[]});
+
+    }
+
+    
 }
 
 
@@ -178,7 +211,7 @@ module.exports.addCheckpointGet = async function (req, res, next) {
     var dbrespCheckpointNo = await dbQuery.query(query1, table1);
 
     var queryU = `SELECT * FROM ?? `;
-    var tableU = ['tbl_user'];
+    var tableU = ['tbl_vehicle'];
     var dbResponseUser = await dbQuery.query(queryU, tableU);
  
 
@@ -194,32 +227,85 @@ module.exports.addCheckpointGet = async function (req, res, next) {
 
 module.exports.addCheckpointPost = async function (req, res, next) {
 
-    qrcode.toDataURL(JSON.stringify(req.body), async(err, src) => {
-       
-        if (err){
-            res.send("Something went wrong!!");
-        }else {
-            var query = "INSERT INTO  ?? SET  ?";
-            var data = {
-                city_id: req.body.city_id,
-                location_id: req.body.location_id,
-                checkpoint_no:req.body.checkpoint_no,
-                checkpoint_location: req.body.checkpoint_location,
-                user_id: req.body.user_id,
-                latitude: req.body.latitude,
-                lngtitude: req.body.lngtitude,
-                checkpoint_qr_code: src
-            }
-            var table = ["tbl_checkpoint", data];
-            var dbResponse = await dbQuery.query(query, table);
-            if(req.body.flag == "qr") {
-                res.redirect('/add-qr-code');
-            } else {
-                res.redirect('/checkpoints');
-            }
-        }   
+   if(req.body.checkpoint_id) {
+
+   
+
+    const myPromise = new Promise(async(resolve, reject) =>  {
+        var checkPoints = JSON.parse(req.body.checkPoints);
+            checkPoints.forEach(async(item) => {
+                var query_g = `SELECT id FROM ?? where  ??= ?`
+                var table_g = [`tbl_checkpoint_qr_code`, `or_code_id`, item.or_code_id];
+                var check_dbResponse_checkpoint = await dbQuery.query(query_g, table_g);
+                console.log(check_dbResponse_checkpoint.length);
+                if(check_dbResponse_checkpoint.length == 0) {
+                    var data = {
+                        checkpoint_id: req.body.checkpoint_id,
+                        checkpoint_location: item.checkpoint_location,
+                        latitude: item.latitude,
+                        lngtitude: item.lngtitude,
+                        checkpoint_qr_code: item.checkpoint_qr_code,
+                        or_code_id:item.or_code_id
+                    }
+                    var query = "INSERT INTO  ?? SET  ?";
+                    var table = ["tbl_checkpoint_qr_code", data];
+                    var dbResponse = await dbQuery.query(query, table);
+                }
+                resolve();
+            });    
+        }).then((data)=> {
+            console.log(data)
+            res.send({status:true, message:"Checkpoint added successfully"})
+        });
+     
+
+   } else {
+     const myPromise = new Promise(async(resolve, reject) =>  {
+ 
+        var checkpoint_data = {
+            location_id: req.body.location_id,
+            city_id: req.body.city_id,
+            checkpoint_no: req.body.checkpoint_no,
+            vehicle_id: req.body.vehicle_id,
+        };
+        var query_checkpoint = "INSERT INTO  ?? SET  ?";
+        var table_checkpoint = ["tbl_checkpoint", checkpoint_data];
+        var dbResponse_checkpoint = await dbQuery.query(query_checkpoint, table_checkpoint);
+        console.log(dbResponse_checkpoint.insertId);
+
+        var checkPoints = JSON.parse(req.body.checkPoints);
+            checkPoints.forEach(async(item) => {
+                var data = {
+                    checkpoint_id: dbResponse_checkpoint.insertId,
+                    checkpoint_location: item.checkpoint_location,
+                    latitude: item.latitude,
+                    lngtitude: item.lngtitude,
+                    checkpoint_qr_code: item.checkpoint_qr_code,
+                    or_code_id:item.or_code_id
+                }
     
-   });
+                var query = "INSERT INTO  ?? SET  ?";
+                var table = ["tbl_checkpoint_qr_code", data];
+                var dbResponse = await dbQuery.query(query, table);
+            });
+            resolve();
+      }).then((data)=>{
+          console.log(data)
+          res.send({status:true, message:"Checkpoint added successfully"})
+      });
+
+   }
+    
+      
+    
+      
+           
+            // if(req.body.flag == "qr") {
+            //     res.redirect('/add-qr-code');
+            // } else {
+            //     res.redirect('/checkpoints');
+            // }
+     
 }
 
 
@@ -267,6 +353,16 @@ module.exports.trackCheckpoints = function (req, res, next) {
     }
     res.render("pages/checkpoints/track-checkpoints",renderPageData);
 }
+
+
+module.exports.deleteCheckPoint = async function (req, res, next) {
+    console.log(req.query.id)
+    var query = "DELETE FROM `tbl_checkpoint_qr_code` WHERE ?? = ?";
+    var table = ['or_code_id', req.query.id];
+    var dbResponse = await dbQuery.query(query, table);
+    res.send({status:true, message:"Checkpoint deleted successfully"})
+}
+
 
 
 

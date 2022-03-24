@@ -15,8 +15,10 @@
                        
                         <div class="card-body">
                             <form class="col-md-6" action="/add-city" method="post">
+                                <input type="hidden" name="latitude" id="latitude">
+                                <input type="hidden" name="lngtitude" id="lngtitude">
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" name="city" id="inputCity" type="text" placeholder="City" required/>
+                                    <input class="form-control"  name="city" id="inputCity" type="text" placeholder="City" required/>
                                     <label for="inputEmail">City</label>
                                 </div>
                                 <div class="mt-4 mb-0">

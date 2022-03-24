@@ -16,6 +16,8 @@
                         <div class="card-body">
                             <form class="col-md-6" action="/edit-city" method="post">
                                 <% for (var i = 0; i < city.length; i++) { %>
+                                    <input type="hidden" name="latitude" id="latitude" value="<%=city[i].latitude%>">
+                                    <input type="hidden" name="lngtitude" id="lngtitude" value="<%=city[i].lngtitude%>">
                                     <div class="form-floating mb-3">
                                         <input class="form-control" value="<%= city[i].city %>" name="city" id="city" type="text" placeholder="City" required/>
                                         <input  value="<%= city[i].id %>" name="id" id="id" type="hidden"  />
