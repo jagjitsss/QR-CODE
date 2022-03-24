@@ -14,6 +14,7 @@ const indexRoute = require('./routers/index_router.js');
 const settingRoute = require('./routers/setting_router.js');
 const locationRoute = require('./routers/location_router.js');
 const photosRoute = require('./routers/photos_router.js');
+const reportsRoute = require('./routers/reports_router.js');
 
 
 app.use(express.json());
@@ -30,7 +31,7 @@ app.use(session({
     resave: false 
 }));
 app.use(express.static("public"));
-app.use('/', [indexRoute,authRoute,vehicleRoute,qrRoute,settingRoute,locationRoute,photosRoute]);
+app.use('/', [indexRoute,authRoute,vehicleRoute,qrRoute,settingRoute,locationRoute,photosRoute,reportsRoute]);
 
 var server_port = process.env.PORT || process.env.PORT || 80;
 app.listen(server_port, function() {
