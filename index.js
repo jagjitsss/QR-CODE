@@ -8,7 +8,7 @@ const session = require('express-session')
 const app = express();
 const port = process.env.port || 3000;
 const authRoute = require('./routers/auth_router.js');
-const userRoute = require('./routers/user_router.js');
+const vehicleRoute = require('./routers/vehicle_router.js');
 const qrRoute = require('./routers/qr_router.js');
 const indexRoute = require('./routers/index_router.js');
 const settingRoute = require('./routers/setting_router.js');
@@ -30,8 +30,7 @@ app.use(session({
     resave: false 
 }));
 app.use(express.static("public"));
-app.use('/', [indexRoute,authRoute,userRoute,qrRoute,settingRoute,locationRoute,photosRoute]);
-
+app.use('/', [indexRoute,authRoute,vehicleRoute,qrRoute,settingRoute,locationRoute,photosRoute]);
 
 var server_port = process.env.PORT || process.env.PORT || 80;
 app.listen(server_port, function() {

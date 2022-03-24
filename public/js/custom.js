@@ -110,10 +110,8 @@ function initAutocomplete() {
 
 }
 var map;
-var marker;
 function fillInAddress(flag, latitude, longitude) {
 	$("#map_id").show();
-	
 	var center_latitude = $("#center_latitude").val();
 	var center_lngtitude = $("#center_lngtitude").val();
 	map = new google.maps.Map(document.getElementById('map_id'), {
@@ -132,16 +130,9 @@ function fillInAddress(flag, latitude, longitude) {
     saveQRCode(location_name, latitude, longitude);
     
   }
- 
-google.maps.event.addListener(map, 'click', function(event) {
-	var result = [event.latLng.lat(), event.latLng.lng()];
-	console.log(result)
-});
   addMarker();
 	
 }
-
-
 
 function addMarker(){
   var infowindow = new google.maps.InfoWindow();
@@ -151,9 +142,7 @@ function addMarker(){
 	for (i = 0; i < locations.length; i++) {
 		marker = new google.maps.Marker({
 			position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-			map: map,
-			draggable: true,
-			animation: google.maps.Animation.DROP,
+			map: map
 		});
 
 		google.maps.event.addListener(marker, 'click', (function (marker, i) {
@@ -162,28 +151,7 @@ function addMarker(){
 				infowindow.open(map, marker);
 			}
 		})(marker, i));
-		google.maps.event.addListener(marker, 'dragend', function () {
-			geocodePosition(marker.getPosition());
-		});
 	}
-}
-
-
-
-//Callback function of the drag event.
-function geocodePosition(pos) {
-	geocoder = new google.maps.Geocoder();
-	geocoder.geocode
-		({
-			latLng: pos
-		},
-			function (results, status) {
-				if (status == google.maps.GeocoderStatus.OK)
-					console.log(results[0]);
-				else
-					console.log('Cannot determine address at this location.' + status);
-			}
-		);
 }
 
 function downloadQRCode() {
