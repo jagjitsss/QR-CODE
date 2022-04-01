@@ -6,6 +6,9 @@ globalVar.routers.route('/edit-vehicle').get(globalVar.checkLogin, globalVar.veh
 globalVar.routers.route('/view-vehicle').get(globalVar.checkLogin, globalVar.vehicleImport.viewUserGet);
 globalVar.routers.route('/track-vehicle').get(globalVar.checkLogin, globalVar.vehicleImport.trackUserGet);
 
+globalVar.routers.route('/get-vehicle-by-id').get(globalVar.checkLogin, globalVar.vehicleImport.getVehicleById);
+
+
 globalVar.routers.route('/add-vehicle').post(globalVar.checkLogin, globalVar.vehicleImport.addUserPost);
 globalVar.routers.route('/edit-vehicle').post(globalVar.checkLogin, globalVar.vehicleImport.editUserPost);
 globalVar.routers.route('/delete-vehicle').get(globalVar.checkLogin, globalVar.vehicleImport.deleteUserPost);

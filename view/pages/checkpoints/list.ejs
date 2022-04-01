@@ -20,7 +20,7 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <div class="card-header text-right">
-                            <a href="add-checkpoint" class="btn btn-primary">Add Checkpoint</a>
+                            <a href="add-checkpoint" class="btn btn-primary">View & Add Checkpoints</a>
                         </div>
                         <div class="card-body" style="overflow-x:auto;">
                             <table id="datatablesSimple">
@@ -34,6 +34,7 @@
                                         <th>Checkpoint Location</th> -->
                                         <th>City</th>
                                         <th>Location</th>
+                                        <th>Total QR Codes</th>
                                         <th>Action</th>
                                         
                                     </tr>
@@ -48,6 +49,7 @@
                                         <th>Checkpoint Location</th> -->
                                         <th>City</th>
                                         <th>Location</th>
+                                        <th>Total QR Codes</th>
                                         <th>Action</th>
                                         
                                     </tr>
@@ -63,6 +65,7 @@
                                             <td><%= checkPoints[i].checkpoint_location %></td> -->
                                             <td><%= checkPoints[i].city %></td>
                                             <td><%= checkPoints[i].location %></td>
+                                            <td><%= checkPoints[i].check_qr_code %></td>
                                             <td>
                                                 <!-- <a href="edit-checkpoint?id=<%= checkPoints[i].id %>" class="btn btn-primary">Edit</a> -->
                                                 <a href="delete-checkpoint?id=<%= checkPoints[i].id %>"  onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger">Delete</a>

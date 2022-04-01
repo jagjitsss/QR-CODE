@@ -12,8 +12,8 @@
                 </ol>
                 <div class="card mb-4">
                     <div class="card-body">
-                       
-                        <img src="assets/img/map.png" class="map_img">
+                        <input type="hidden" id="vehicle_id" value="<%= vehicle_id%>" >
+                        <div id="Vehicle_location" style="width:100%;height:500px;margin-bottom: 15px;" ></div>
                     </div>
                 </div>
                 </div>
@@ -21,3 +21,36 @@
     </div>
 </div>
 <%- include('../../layout/footer.ejs') %>
+
+<script>
+    $(document).ready((function () {
+        var vehicle_id  = $("#vehicle_id").val();
+        var request = $.ajax({
+            url: "/get-vehicle-by-id?id=" + vehicle_id,
+            type: "GET",
+        });
+        request.done(function (data) {
+            var res = data.data;
+            if(res) {
+                initMap(JSON.parse(res[0].lat_lng));
+            }
+          
+        });
+        request.fail(function (jqXHR, textStatus) {
+             alert('error');
+        });
+    }))
+    function initMap(LatLng) {
+        const map = new google.maps.Map(document.getElementById("Vehicle_location"), {
+            zoom: 15,
+            center: LatLng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+        });
+        new google.maps.Marker({
+            position: LatLng,
+            map,
+            title: "Hello World!",
+        });
+     
+  }
+</script>

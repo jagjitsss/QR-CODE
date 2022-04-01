@@ -87,7 +87,6 @@ module.exports.addLocationsGet = async function (req, res, next) {
 
 
 module.exports.addLocationPost = async function (req, res, next) {
-    console.log(req.body);
     var data = { 
         city_id: req.body.city_id,
         location: req.body.location,
@@ -165,7 +164,7 @@ module.exports.getlocationsGet = async function (req, res, next) {
 
 
 module.exports.checkpointsGet = async function (req, res, next) {
-    var query = `SELECT tbl_checkpoint.*, tbl_vehicle.driver_name, tbl_locations.location as location, tbl_cities.city as city FROM ?? LEFT JOIN tbl_cities ON tbl_cities.id = tbl_checkpoint.city_id LEFT JOIN tbl_locations on tbl_locations.id = tbl_checkpoint.location_id LEFT JOIN tbl_vehicle on tbl_vehicle.id = tbl_checkpoint.vehicle_id ORDER BY checkpoint_no ASC`
+    var query = `SELECT (SELECT COUNT(*) FROM tbl_checkpoint_qr_code WHERE tbl_checkpoint_qr_code.checkpoint_id = tbl_checkpoint.id) AS check_qr_code,tbl_checkpoint.*, tbl_vehicle.driver_name, tbl_locations.location as location, tbl_cities.city as city FROM ?? LEFT JOIN tbl_cities ON tbl_cities.id = tbl_checkpoint.city_id LEFT JOIN tbl_locations on tbl_locations.id = tbl_checkpoint.location_id LEFT JOIN tbl_vehicle on tbl_vehicle.id = tbl_checkpoint.vehicle_id ORDER BY checkpoint_no ASC`
     var table = [`tbl_checkpoint`];
     var dbrespCheckPoints = await dbQuery.query(query, table);
 

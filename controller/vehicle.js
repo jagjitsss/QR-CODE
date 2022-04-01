@@ -1,4 +1,6 @@
 var dbQuery = require("../db/dev/dbQuery");
+var moment = require('moment');
+
 module.exports.usersGet = async function (req, res, next) {
     var query = `SELECT * FROM ?? ORDER BY id DESC`
     var table = [`tbl_vehicle`];
@@ -78,6 +80,14 @@ module.exports.updateIsActive = async function (req, res, next) {
     res.send({status:true,data:dbResponse, message:"Updated"})
 }
 
+module.exports.getVehicleById = async function (req, res, next) {
+    
+    var query_g = `SELECT lat_lng FROM ?? where  ??= ?`
+    var table_g = [`tbl_vehicle`, `id`, req.query.id];
+    var vehicleData = await dbQuery.query(query_g, table_g);
+    res.send({status:true,data:vehicleData})
+}
+
 
 module.exports.deleteUserPost = async function (req, res, next) {
     var query = "DELETE FROM `tbl_vehicle` WHERE ?? = ?";
@@ -90,15 +100,38 @@ module.exports.deleteUserPost = async function (req, res, next) {
 module.exports.viewUserGet = function (req, res, next) {
     var renderPageData = {
         url:req.url,
-        title:"Manage Vehicle"
+        title:"View Vehicle",
+        vehicle_id: req.query.id
     }
     res.render("pages/vehicle/view",renderPageData);
 }
 
-module.exports.trackUserGet = function (req, res, next) {
+module.exports.trackUserGet = async function (req, res, next) {
+    var query_g = `SELECT id FROM ?? where  ??= ?`
+    var table_g = [`tbl_checkpoint`, `vehicle_id`, req.query.id];
+    var checkPointData = await dbQuery.query(query_g, table_g);
+    console.log(checkPointData.length);
+    var checkPointsId = [];
+    for(let i = 0; i < checkPointData.length; i++) {
+        checkPointsId.push(checkPointData[i].id);
+    }
+    var check_point_id = checkPointsId.toString();
+    if(req.query.d) {
+        var query_v = `SELECT checkpoint_location,updated_on FROM ?? where  checkpoint_id IN (?) AND updated_on IS NOT NULL AND DATE(updated_on) = '`+req.query.d+`'`
+    } else {
+        var query_v = `SELECT checkpoint_location,updated_on FROM ?? where  checkpoint_id IN (?) AND updated_on IS NOT NULL AND DATE(updated_on) = '`+moment().format('YYYY-MM-DD')+`'`
+    }
+  
+    var table_v = [`tbl_checkpoint_qr_code`, check_point_id];
+    var checkpointsData = await dbQuery.query(query_v, table_v);
+    console.log(checkpointsData)
+
     var renderPageData = {
         url:req.url,
-        title:"Manage Vehicle"
+        title:"Manage Vehicle",
+        vehicle_id: req.query.id,
+        checkpointsData:checkpointsData,
+        date:req.query.d ?req.query.d :moment().format('YYYY-MM-DD')
     }
     res.render("pages/vehicle/track",renderPageData);
 }

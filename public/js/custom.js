@@ -80,6 +80,7 @@ function activeInactive(id) {
 }
 
 var locations = [];
+var checkPoints = [];
 var counter = 0;
 
 function initAutocomplete() {
@@ -110,48 +111,111 @@ function initAutocomplete() {
 
 }
 var map;
+var marker;
+var geocoder;
 function fillInAddress(flag, latitude, longitude) {
 	$("#map_id").show();
+	
 	var center_latitude = $("#center_latitude").val();
 	var center_lngtitude = $("#center_lngtitude").val();
 	map = new google.maps.Map(document.getElementById('map_id'), {
 		zoom: 15,
 		center: new google.maps.LatLng(center_latitude, center_lngtitude),
 		mapTypeId: google.maps.MapTypeId.ROADMAP,
-    strictBounds: true,
+        strictBounds: true,
 	});
 	if (flag == "showMap") {
 		return false;
 	}
-  if(flag != 'remove') {
-    var location_name = $("#location").val();
-    locations.push([location_name, latitude, longitude, locations.length])
-    $("#location").val("");
-    saveQRCode(location_name, latitude, longitude);
-    
-  }
-  addMarker();
+	if(flag != 'remove') {
+		var location_name = $("#location").val();
+		locations.push([location_name, latitude, longitude, locations.length])
+		$("#location").val("");
+		saveQRCode(-1, location_name, latitude, longitude);
+		
+	}
+	
+	google.maps.event.addListener(map, 'click', function(event) {
+		var result = [event.latLng.lat(), event.latLng.lng()];
+		console.log(result)
+	});
+	geocoder = new google.maps.Geocoder();
+	addMarker();
 	
 }
+
+
+
 
 function addMarker(){
   var infowindow = new google.maps.InfoWindow();
 
 	var marker, i;
+	console.log(locations);
 
 	for (i = 0; i < locations.length; i++) {
+		console.log(locations[i][1], locations[i][2])
 		marker = new google.maps.Marker({
 			position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-			map: map
+			map: map,
+			draggable: true,
+			animation: google.maps.Animation.DROP,
+			//originalPos: locations[i][1]+'-'+locations[i][2],
+			counter_index:i
 		});
 
 		google.maps.event.addListener(marker, 'click', (function (marker, i) {
 			return function () {
-				infowindow.setContent(locations[i][0]);
+				infowindow.setContent(locations[i][0]+' '+locations[i][1]+' '+locations[i][2]);
 				infowindow.open(map, marker);
 			}
 		})(marker, i));
+		//markers.push(marker);
+		google.maps.event.addListener(marker, 'dragend', function () {
+			//console.log(this.originalPos)
+			// infoWindow.setContent("marker originally at this position: " + this.originalPos + " was dragged to: " + this.position);
+			// infoWindow.open(map, this);
+			console.log(marker.getPosition().toJSON(),'<=top');
+			console.log(marker.position.lat(),'<=top111111111');
+			geocodePosition(this.getPosition(),this.counter_index);
+		});
 	}
+}
+
+
+
+//Callback function of the drag event.
+function geocodePosition(pos, counter_index) {
+	// console.log(pos)
+	// console.log(locations);
+	// console.log(checkPoints);
+	//markers[2].setVisible(false);
+	
+   console.log(pos.toJSON(),'<=bottom')
+   
+	
+	geocoder.geocode
+		({
+			latLng: pos
+		},
+			function (results, status) {
+				if (status == google.maps.GeocoderStatus.OK) {
+					var lat = results[0].geometry['location'].lat();
+					var lng = results[0].geometry['location'].lng();
+				 console.log( lat, lng, results[0] );
+					locations[counter_index][0] = results[0].formatted_address;
+					locations[counter_index][1] = lat;
+					locations[counter_index][2] = lng;
+
+					
+					saveQRCode(counter_index, results[0].formatted_address,lat, lng );
+					//fillInAddress('', '', '');
+					//setTimeout(fillInAddress('remove', '', ''), 000);
+				} else {
+					console.log('Cannot determine address at this location.' + status);
+				}
+			}
+		);
 }
 
 function downloadQRCode() {
@@ -163,13 +227,16 @@ function downloadQRCode() {
 	document.body.removeChild(a);
 }
 
-var checkPoints = [];
-function saveQRCode(location_name, latitude, longitude) {
 
+function saveQRCode(counter_index, location_name, latitude, longitude) {
+    var vehicle_id = $("#vehicle_id").val();
+	var or_code_id  = randomString();
 	var data = {
 		location_name: location_name,
 		latitude: latitude,
 		longitude: longitude,
+		vehicle_id:vehicle_id,
+		or_code_id:or_code_id,
 		flag: 'ajax'
 	}
 
@@ -182,21 +249,52 @@ function saveQRCode(location_name, latitude, longitude) {
 	});
 
 	request.done(function (data) {
-    var or_code_id  = randomString();
-    checkPoints.push({
-      checkpoint_location: location_name,
-      latitude: latitude,
-      lngtitude : longitude,
-      checkpoint_qr_code :data.data,
-      or_code_id:or_code_id
-    })
-		var html = "<tr id='remove_"+or_code_id+"'>" +
+
+		if(counter_index >= 0) {
+			checkPoints[counter_index].checkpoint_location = location_name;
+			checkPoints[counter_index].latitude = latitude;
+			checkPoints[counter_index].longitude = longitude;
+			checkPoints[counter_index].checkpoint_qr_code = data.data;
+			checkPoints[counter_index].or_code_id = or_code_id;
+		
+
+			
+			var tr_id = $('#qr_code_body tr')[counter_index].id;
+			var $row = $("#"+tr_id);
+			//$("#"+tr_id).remove();
+			
+			var html = "<tr id='remove_"+or_code_id+"'>" +
 
 			"<td><img src='" + data.data + "' style='height: 79px;'></td>" +
 			"<td>" + location_name + "</td>" +
-			"<td>  <a href='#' id='"+or_code_id+"' class='btn btn-danger delete_checkpoint'>Delete</a></td>" +
+			"<td>  <a href='#' id='"+or_code_id+"' class='btn btn-danger delete_checkpoint' style='margin-right:5px'>Delete</a>"+
+			"<a href='" + data.data + "'  class='btn btn-warning ' Download='"+location_name+".png'>Download</a></td>" +
 			"</tr>";
-		$("#qr_code_body").append(html);
+			$row.replaceWith(html);
+			
+			//$("#qr_code_body").append(html);
+		} else {
+			checkPoints.push({
+				checkpoint_location: location_name,
+				latitude: latitude,
+				lngtitude : longitude,
+				checkpoint_qr_code :data.data,
+				or_code_id:or_code_id
+			  })
+			  var html = "<tr id='remove_"+or_code_id+"'>" +
+
+			  "<td><img src='" + data.data + "' style='height: 79px;'></td>" +
+			  "<td>" + location_name + "</td>" +
+			  "<td>  <a href='#' id='"+or_code_id+"' class='btn btn-danger delete_checkpoint' style='margin-right:5px'>Delete</a>"+
+			  "<a href='" + data.data + "'  class='btn btn-warning ' Download='"+location_name+".png'>Download</a>" +
+			  "</td>" +
+			  "</tr>";
+		  $("#qr_code_body").append(html);
+
+		}
+   
+    
+	
 
 
 	});
@@ -270,6 +368,7 @@ function changeGetLocation() {
   
   $("#showmap_and_search_").hide();
  }
+ $("#checkpoint_id").val("");
 }
 
 
@@ -288,6 +387,7 @@ function changeGetVehicle() {
   } else {
     $("#showmap_and_search_").hide();
   }
+  $("#checkpoint_id").val("");
 }
 
 
@@ -301,8 +401,9 @@ function getCheckPoints(vehicle_id,city_id, location_id){
 
 	request.done(function (data) {
     var res = data.data;
+	$("#qr_code_body").empty();
     if(res.length > 0) {
-      $("#qr_code_body").empty();
+      
       $("#showmap_and_search_").show();
       $("#checkpoint_id").val(data.checkpoint_id);
       console.log(data.checkpoint_id)
@@ -315,13 +416,14 @@ function getCheckPoints(vehicle_id,city_id, location_id){
           checkpoint_qr_code :element.checkpoint_qr_code,
           or_code_id:element.or_code_id
         })
-        locations.push([element.checkpoint_location, element.latitude, element.lngtitude, count])
+        locations.push([element.checkpoint_location, parseFloat(element.latitude), parseFloat(element.lngtitude), count])
 
           var html = "<tr id='remove_"+element.or_code_id+"'>" +
 
           "<td><img src='" + element.checkpoint_qr_code + "' style='height: 79px;'></td>" +
           "<td>" + element.checkpoint_location + "</td>" +
-          "<td>  <a href='#' id='"+element.or_code_id+"' class='btn btn-danger delete_checkpoint'>Delete</a></td>" +
+          "<td>  <a href='#' id='"+element.or_code_id+"' class='btn btn-danger delete_checkpoint' style='margin-right:5px'>Delete</a>"+
+		  "<a href='" + element.checkpoint_qr_code + "'  class='btn btn-warning ' Download='"+element.checkpoint_location.replace(/ /g,"_")+".png'>Download</a></td>" +
           "</tr>";
         $("#qr_code_body").append(html);
         count++;

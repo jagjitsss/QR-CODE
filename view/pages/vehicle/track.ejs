@@ -1,5 +1,7 @@
 <%- include('../../layout/header.ejs') %>
 <%- include('../../layout/nav.ejs') %>  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
 <div id="layoutSidenav">
     <%- include('../../layout/sideBar.ejs') %>
     <div id="layoutSidenav_content">
@@ -13,7 +15,8 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <div class="card-header text-right">
-                            <input type="date" class="form-control">
+                            <input type="date" value="<%=date%>" id="date_f" class="form-control" onchange="getDate()">
+                            <input type="hidden" id="vehicle_id" class="form-control" value="<%= vehicle_id%>">
                         </div>
                         <div class="card-body">
                             <table id="datatablesSimple">
@@ -32,44 +35,14 @@
                                     </tr>
                                 </tfoot>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Jalandhar, Punjab</td>
-                                        <td>13 Mar 2022 11:20 AM</td>
-                                       
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Moga, Punjab</td>
-                                        <td>17 Mar 2022 11:20 AM</td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Chandigarh, Punjab</td>
-                                        <td>16 Mar 2022 11:20 AM</td>
-                                       
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>Sector 22, Chandigarh</td>
-                                        <td>15 Mar 2022 11:20 AM</td>
-                                       
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>Mohali, Punjab</td>
-                                        <td>15 Mar 2022 11:20 AM</td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                        <td>Phase 7, Sector 61</td>
-                                        <td>24 Mar 2022 11:20 AM</td>
-                                        
-                                        
-                                    </tr>
+                                    <% for (var i = 0; i < checkpointsData.length; i++) { %>
+                                        <tr>
+                                            <td><%= i + 1%></td>
+                                            <td><%= checkpointsData[i].checkpoint_location%></td>
+                                            <td><%= moment(checkpointsData[i].updated_on).format('DD MMMM, YYYY hh:mm A')%></td>
+                                        </tr>
+                                    <% } %>    
+                                    
 
                                     
                                 </tbody>
@@ -82,3 +55,14 @@
     </div>
 </div>
 <%- include('../../layout/footer.ejs') %>
+
+<script>
+   
+
+    function getDate(){
+      var date = $("#date_f").val();
+      var id = $("#vehicle_id").val();
+      window.location = "track-vehicle?id="+id+'&d='+date;
+      console.log(date)
+    }
+</script>

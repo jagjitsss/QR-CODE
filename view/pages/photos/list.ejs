@@ -20,9 +20,9 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Photo</th>
-                                        <th>Username</th>
+                                        <th>Driver Name / Vehicle</th>
                                         <th>Location</th>
-                                        <th>Date</th>
+                                        <!-- <th>Date</th> -->
                                         <th>Action</th>
                                         
                                     </tr>
@@ -33,25 +33,27 @@
                                         <th>Photo</th>
                                         <th>username</th>
                                         <th>Location</th>
-                                        <th>Date</th>
+                                        <!-- <th>Date</th> -->
                                         <th>Action</th>
                                         
                                     </tr>
                                 </tfoot>
                                 <tbody>
+                                    <% for (var i = 0; i < photo.length; i++) { %>
                                         <tr>
-                                            <td>1</td>
-                                            <td><img class="qr_img" src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg"></td>
-                                            <td>Sumi</td>
-                                            <td>Mohali</td>
-                                            <td>22-15-2022 11:50 AM</td>
+                                            <td><%= i+1 %></td>
+                                            <td><img class="qr_img" src="<%= photo[i].photo%>"></td>
+                                            <td><%= photo[i].driver_name%>/<%= photo[i].vehicle_number%></td>
+                                            <td><%= photo[i].location%></td>
+                                            <!-- <td>22-15-2022 11:50 AM</td> -->
                                           
                                             <td>
-                                                <a target="_blank" href="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" class="btn btn-warning" >View Photo</a>
-                                                <a  href="#" class="btn btn-danger" >Delete</a>
+                                                <a target="_blank" href="<%= photo[i].photo%>" class="btn btn-warning" >View Photo</a>
+                                                <a  href="delete-photo?id=<%= photo[i].id %>"  onclick="return confirm('Are you sure you want to delete?')"  class="btn btn-danger" >Delete</a>
 
                                             </td>
                                         </tr>
+                                     <% } %>   
                                 
                                     
 

@@ -1,5 +1,10 @@
 <%- include('../../layout/header.ejs') %>
 <%- include('../../layout/nav.ejs') %>  
+<style>
+  table tr td {
+    display: inline;
+  }
+</style>
 <div id="layoutSidenav">
     <%- include('../../layout/sideBar.ejs') %>
     <div id="layoutSidenav_content">
@@ -10,10 +15,33 @@
                     <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
                     <li class="breadcrumb-item active">View checkpoints</li>
                 </ol>
+                
                 <div class="card mb-4">
-                    <div class="card-body">
+                    <div class="card-body row">
+                        <div class="col-sm-4">
+                          <table>
+                              <tr>
+                                <td>Checkpoint 1-</td>
+                                <td><b> CHANDIGARH DISTANCE RUNNERS, Sector 15-A, Sector 15, Chandigarh, India-	  </b></td>
+                                <td><b> 28 Mar 2 PM</b></td>
+                              </tr>
+                              <tr>
+                                <td>Checkpoint 2-</td>
+                                <td><b> Manly Beach-</b></td>
+                                <td><b> 28 Mar 4 PM</b></td>
+                              </tr>
+                              <tr>
+                                <td>Checkpoint 3-</td>
+                                <td><b> Cronulla Beach-</b></td>
+                                <td><b> 28 Mar 6 PM</b></td>
+                              </tr>
+                          </table>
+                        </div>
+                        <div class="col-sm-8">
+                          <div id="checkpoint_pins" style="width: 100%; height: 400px;"></div>
+
+                        </div>
                        
-                        <div id="checkpoint_pins" style="width: 100%; height: 400px;"></div>
 
                     </div>
                 </div>

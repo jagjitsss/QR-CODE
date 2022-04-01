@@ -15,7 +15,7 @@ const settingRoute = require('./routers/setting_router.js');
 const locationRoute = require('./routers/location_router.js');
 const photosRoute = require('./routers/photos_router.js');
 const reportsRoute = require('./routers/reports_router.js');
-
+app.locals.moment = require('moment');
 
 app.use(express.json());
 app.use(express.json());
