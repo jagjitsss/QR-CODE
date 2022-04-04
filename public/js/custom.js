@@ -137,7 +137,7 @@ function fillInAddress(flag, latitude, longitude) {
 	
 	google.maps.event.addListener(map, 'click', function(event) {
 		var result = [event.latLng.lat(), event.latLng.lng()];
-		console.log(result)
+		
 	});
 	geocoder = new google.maps.Geocoder();
 	addMarker();
@@ -151,10 +151,9 @@ function addMarker(){
   var infowindow = new google.maps.InfoWindow();
 
 	var marker, i;
-	console.log(locations);
+
 
 	for (i = 0; i < locations.length; i++) {
-		console.log(locations[i][1], locations[i][2])
 		marker = new google.maps.Marker({
 			position: new google.maps.LatLng(locations[i][1], locations[i][2]),
 			map: map,
@@ -175,8 +174,8 @@ function addMarker(){
 			//console.log(this.originalPos)
 			// infoWindow.setContent("marker originally at this position: " + this.originalPos + " was dragged to: " + this.position);
 			// infoWindow.open(map, this);
-			console.log(marker.getPosition().toJSON(),'<=top');
-			console.log(marker.position.lat(),'<=top111111111');
+			
+			
 			geocodePosition(this.getPosition(),this.counter_index);
 		});
 	}
@@ -186,12 +185,7 @@ function addMarker(){
 
 //Callback function of the drag event.
 function geocodePosition(pos, counter_index) {
-	// console.log(pos)
-	// console.log(locations);
-	// console.log(checkPoints);
-	//markers[2].setVisible(false);
-	
-   console.log(pos.toJSON(),'<=bottom')
+
    
 	
 	geocoder.geocode
@@ -247,17 +241,18 @@ function saveQRCode(counter_index, location_name, latitude, longitude) {
 		cache: false,
 		data: data,
 	});
+	console.log(latitude, longitude,'-------------------')
 
 	request.done(function (data) {
 
 		if(counter_index >= 0) {
 			checkPoints[counter_index].checkpoint_location = location_name;
 			checkPoints[counter_index].latitude = latitude;
-			checkPoints[counter_index].longitude = longitude;
+			checkPoints[counter_index].lngtitude = longitude;
 			checkPoints[counter_index].checkpoint_qr_code = data.data;
-			checkPoints[counter_index].or_code_id = or_code_id;
+			//checkPoints[counter_index].or_code_id = or_code_id;
 		
-
+         
 			
 			var tr_id = $('#qr_code_body tr')[counter_index].id;
 			var $row = $("#"+tr_id);
@@ -406,7 +401,7 @@ function getCheckPoints(vehicle_id,city_id, location_id){
       
       $("#showmap_and_search_").show();
       $("#checkpoint_id").val(data.checkpoint_id);
-      console.log(data.checkpoint_id)
+    
       var count = 0;
        res.forEach(element => {
         checkPoints.push({
@@ -428,7 +423,7 @@ function getCheckPoints(vehicle_id,city_id, location_id){
         $("#qr_code_body").append(html);
         count++;
        });
-       console.log(locations);
+       
        setTimeout(fillInAddress('remove', '', ''), 000);
        
     }
@@ -481,7 +476,7 @@ function saveCheckPoint() {
 	});
 
   request.done(function (data) {
-        window.location="checkpoints";
+     window.location="checkpoints";
   });
 
   request.fail(function (jqXHR, textStatus) {

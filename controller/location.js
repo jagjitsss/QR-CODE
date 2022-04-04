@@ -164,7 +164,7 @@ module.exports.getlocationsGet = async function (req, res, next) {
 
 
 module.exports.checkpointsGet = async function (req, res, next) {
-    var query = `SELECT (SELECT COUNT(*) FROM tbl_checkpoint_qr_code WHERE tbl_checkpoint_qr_code.checkpoint_id = tbl_checkpoint.id) AS check_qr_code,tbl_checkpoint.*, tbl_vehicle.driver_name, tbl_locations.location as location, tbl_cities.city as city FROM ?? LEFT JOIN tbl_cities ON tbl_cities.id = tbl_checkpoint.city_id LEFT JOIN tbl_locations on tbl_locations.id = tbl_checkpoint.location_id LEFT JOIN tbl_vehicle on tbl_vehicle.id = tbl_checkpoint.vehicle_id ORDER BY checkpoint_no ASC`
+    var query = `SELECT (SELECT COUNT(*) FROM tbl_checkpoint_qr_code WHERE tbl_checkpoint_qr_code.checkpoint_id = tbl_checkpoint.id) AS check_qr_code,tbl_checkpoint.*, tbl_vehicle.driver_name,tbl_vehicle.vehicle_number,tbl_locations.location as location, tbl_cities.city as city FROM ?? LEFT JOIN tbl_cities ON tbl_cities.id = tbl_checkpoint.city_id LEFT JOIN tbl_locations on tbl_locations.id = tbl_checkpoint.location_id LEFT JOIN tbl_vehicle on tbl_vehicle.id = tbl_checkpoint.vehicle_id ORDER BY checkpoint_no ASC`
     var table = [`tbl_checkpoint`];
     var dbrespCheckPoints = await dbQuery.query(query, table);
 
@@ -236,7 +236,7 @@ module.exports.addCheckpointPost = async function (req, res, next) {
                 var query_g = `SELECT id FROM ?? where  ??= ?`
                 var table_g = [`tbl_checkpoint_qr_code`, `or_code_id`, item.or_code_id];
                 var check_dbResponse_checkpoint = await dbQuery.query(query_g, table_g);
-                console.log(check_dbResponse_checkpoint.length);
+                console.log(item.vehicle_id,'-',item.latitude,'--',item.lngtitude,'--', item.or_code_id,'--',check_dbResponse_checkpoint.length);
                 if(check_dbResponse_checkpoint.length == 0) {
                     var data = {
                         checkpoint_id: req.body.checkpoint_id,
@@ -244,10 +244,21 @@ module.exports.addCheckpointPost = async function (req, res, next) {
                         latitude: item.latitude,
                         lngtitude: item.lngtitude,
                         checkpoint_qr_code: item.checkpoint_qr_code,
-                        or_code_id:item.or_code_id
+                        or_code_id:item.or_code_id,
+                        vehicle_id: req.body.vehicle_id,
                     }
                     var query = "INSERT INTO  ?? SET  ?";
                     var table = ["tbl_checkpoint_qr_code", data];
+                    var dbResponse = await dbQuery.query(query, table);
+                } else {
+                    var data = {
+                        checkpoint_location: item.checkpoint_location,
+                        latitude: item.latitude,
+                        lngtitude: item.lngtitude,
+                        checkpoint_qr_code: item.checkpoint_qr_code
+                    }
+                    var query = "UPDATE ?? SET ? WHERE ??=?";
+                    var table = ["tbl_checkpoint_qr_code",data, `or_code_id`, item.or_code_id];
                     var dbResponse = await dbQuery.query(query, table);
                 }
                 resolve();
@@ -280,7 +291,8 @@ module.exports.addCheckpointPost = async function (req, res, next) {
                     latitude: item.latitude,
                     lngtitude: item.lngtitude,
                     checkpoint_qr_code: item.checkpoint_qr_code,
-                    or_code_id:item.or_code_id
+                    or_code_id:item.or_code_id,
+                    vehicle_id: req.body.vehicle_id,
                 }
     
                 var query = "INSERT INTO  ?? SET  ?";
@@ -349,12 +361,30 @@ module.exports.editCheckpointPost = async function (req, res, next) {
     res.redirect('/checkpoints');
 }
 
-module.exports.trackCheckpoints = function (req, res, next) {
+module.exports.trackCheckpoints = async function (req, res, next) {
+    var query1 = `SELECT updated_on,checkpoint_location, latitude, lngtitude FROM ?? where  ??= ?`
+    var table1 = [`tbl_checkpoint_qr_code`, `vehicle_id`, req.query.v_id];
+    var dbrespCheckPoints = await dbQuery.query(query1, table1);
+
     var renderPageData = {
         url:req.url,
-        title:"Track Checkpoints"
+        title:"Track Checkpoints",
+        checkPoints:dbrespCheckPoints,
+        vehicle_id:req.query.v_id
     }
     res.render("pages/checkpoints/track-checkpoints",renderPageData);
+}
+
+module.exports.getlocationLatLng = async function (req, res, next) {
+    var query1 = `SELECT checkpoint_location, latitude, lngtitude FROM ?? where  ??= ?`
+    var table1 = [`tbl_checkpoint_qr_code`, `vehicle_id`, req.query.vehicle_id];
+    var dbrespCheckPoints = await dbQuery.query(query1, table1);
+    var lat_long = [];
+    for(let i = 0;i < dbrespCheckPoints.length; i++) {
+        lat_long.push([dbrespCheckPoints[i].checkpoint_location,dbrespCheckPoints[i].latitude,dbrespCheckPoints[i].lngtitude,i+1 ])
+    }
+    res.send({status:true, data:lat_long});
+    
 }
 
 

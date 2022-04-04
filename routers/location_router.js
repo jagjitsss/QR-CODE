@@ -26,6 +26,8 @@ globalVar.routers.route('/delete-checkpoint').get(globalVar.checkLogin, globalVa
 globalVar.routers.route('/edit-checkpoint').post(globalVar.checkLogin, globalVar.locationImport.editCheckpointPost);
 
 globalVar.routers.route('/track-checkpoints').get(globalVar.checkLogin, globalVar.locationImport.trackCheckpoints);
+globalVar.routers.route('/get-location-lat-lng').get(globalVar.checkLogin, globalVar.locationImport.getlocationLatLng);
+
 globalVar.routers.route('/get-by-id-checkpoints').get(globalVar.checkLogin, globalVar.locationImport.checkpointsGetById);
 
 globalVar.routers.route('/delete-checkpoint').post(globalVar.checkLogin, globalVar.locationImport.deleteCheckPoint);
