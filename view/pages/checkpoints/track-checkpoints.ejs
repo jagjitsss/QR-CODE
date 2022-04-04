@@ -25,7 +25,7 @@
                               <tr style="border-bottom:1px solid;">
                                 <td><%=i+1%>-</td>
                                 <td> <%=checkPoints[i].checkpoint_location%>-	  </td>
-                                <td><b>Scanned at : <%= checkPoints[i].updated_on ? moment(checkPoints[i].updated_on).format('DD MMM, YYYY') :'Not Scanned Yet'%></b></b></td>
+                                <td><b> <%= checkPoints[i].updated_on ? 'Scanned at :'+moment(checkPoints[i].updated_on).format('DD MMM, YYYY') :'Not Scanned Yet'%></b></b></td>
                               </tr>
                               <% } %>
                           </table>

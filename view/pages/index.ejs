@@ -31,10 +31,10 @@
                                 
                             %>
                                 <tr>
-                                    <td><%= dbrespV[i].driver_name %>/ <%= dbrespV[i].vehicle_number %></td>
+                                    <td><b><%= dbrespV[i].driver_name %></b>/ <%= dbrespV[i].vehicle_number %></td>
                                     <td>
                                         <% for (var j = 0; j < checkpoints.length-1; j++) { %>
-                                         <p>CheckPoint <%= j+1%>/ <%= j==0 ? checkpoints[j] :checkpoints[j].substring(1)%></p>
+                                         <p><b>CheckPoint <%= j+1%></b>/ <%= j==0 ? checkpoints[j] :checkpoints[j].substring(1)%></p>
                                         <% } %>
                                     </td>
                                     <td>
