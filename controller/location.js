@@ -379,10 +379,21 @@ module.exports.getlocationLatLng = async function (req, res, next) {
     var query1 = `SELECT checkpoint_location, latitude, lngtitude FROM ?? where  ??= ?`
     var table1 = [`tbl_checkpoint_qr_code`, `vehicle_id`, req.query.vehicle_id];
     var dbrespCheckPoints = await dbQuery.query(query1, table1);
+
+    var query_v = `SELECT lat_lng FROM tbl_vehicle where ?? = ?`;
+    var table_v = ['id', req.query.vehicle_id];
+    var dbResponseVehicle = await dbQuery.query(query_v, table_v);
     var lat_long = [];
+     
+   
     for(let i = 0;i < dbrespCheckPoints.length; i++) {
-        lat_long.push([dbrespCheckPoints[i].checkpoint_location,dbrespCheckPoints[i].latitude,dbrespCheckPoints[i].lngtitude,i+1 ])
+        lat_long.push([dbrespCheckPoints[i].checkpoint_location,dbrespCheckPoints[i].latitude,dbrespCheckPoints[i].lngtitude,'red.png',i+1 ])
     }
+    if(dbResponseVehicle.length > 0) {
+        var vehicle_l = JSON.parse(dbResponseVehicle[0].lat_lng);
+        console.log(vehicle_l)
+        lat_long.push(['Driver',parseFloat(vehicle_l.lat),parseFloat(vehicle_l.lng), 'yellow.png', dbrespCheckPoints.length+1])
+      }
     res.send({status:true, data:lat_long});
     
 }

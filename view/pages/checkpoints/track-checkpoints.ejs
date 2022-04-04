@@ -22,10 +22,10 @@
                           <input type="hidden" id="vehicle_id" value="<%= vehicle_id%>" >
                           <table>
                             <% for (var i = 0; i < checkPoints.length; i++) { %>
-                              <tr>
+                              <tr style="border-bottom:1px solid;">
                                 <td><%=i+1%>-</td>
                                 <td> <%=checkPoints[i].checkpoint_location%>-	  </td>
-                                <td> <%= checkPoints[i].updated_on ? moment(checkPoints[i].updated_on).format('DD MMM, YYYY') :'N/A'%></td>
+                                <td><b>Scanned at : <%= checkPoints[i].updated_on ? moment(checkPoints[i].updated_on).format('DD MMM, YYYY') :'Not Scanned Yet'%></b></b></td>
                               </tr>
                               <% } %>
                           </table>
@@ -53,23 +53,30 @@
       });
 
       request.done(function (data) {
-        console.log(data)
-        var locations =  data.data;
-       console.log(locations)
+         var locations =  data.data;
+ 
       var map = new google.maps.Map(document.getElementById('checkpoint_pins'), {
         zoom: 15,
         center: new google.maps.LatLng(locations[0][1], locations[0][2]),
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+       
       });
+      
       
       var infowindow = new google.maps.InfoWindow();
 
       var marker, i;
       
       for (i = 0; i < locations.length; i++) {  
+        var url = "assets/img/";
+        url += locations[i][3];
         marker = new google.maps.Marker({
           position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-          map: map
+          map: map,
+          icon: {
+            url: url,
+            scaledSize: new google.maps.Size(38, 38)
+          }
         });
         
         google.maps.event.addListener(marker, 'click', (function(marker, i) {

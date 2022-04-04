@@ -1,8 +1,8 @@
 var dbQuery = require("../db/dev/dbQuery");
 
 module.exports.photosGet = async function (req, res, next) {
-    var query = `SELECT tbl_Photos.*, tbl_vehicle.driver_name,tbl_vehicle.vehicle_type,tbl_vehicle.vehicle_number FROM ?? LEFT JOIN tbl_vehicle ON tbl_vehicle.id = tbl_Photos.user_id;`
-    var table = [`tbl_Photos`];
+    var query = `SELECT tbl_photos.*, tbl_vehicle.driver_name,tbl_vehicle.vehicle_type,tbl_vehicle.vehicle_number FROM ?? LEFT JOIN tbl_vehicle ON tbl_vehicle.id = tbl_photos.user_id;`
+    var table = [`tbl_photos`];
     var dbrespPhoto= await dbQuery.query(query, table);
     var renderPageData = {
         url:req.url,
@@ -15,7 +15,7 @@ module.exports.photosGet = async function (req, res, next) {
 
 
 module.exports.deletephotosGet = async function (req, res, next) {
-    var query = "DELETE FROM `tbl_Photos` WHERE ?? = ?";
+    var query = "DELETE FROM `tbl_photos` WHERE ?? = ?";
     var table = ['id', req.query.id];
     var dbResponse = await dbQuery.query(query, table);
     res.redirect('/view-photos');
