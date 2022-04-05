@@ -113,6 +113,7 @@ function initAutocomplete() {
 var map;
 var marker;
 var geocoder;
+var checkpoint_no_unique;
 function fillInAddress(flag, latitude, longitude) {
 	$("#map_id").show();
 	
@@ -244,6 +245,7 @@ function saveQRCode(counter_index, location_name, latitude, longitude) {
 	console.log(latitude, longitude,'-------------------')
 
 	request.done(function (data) {
+		 checkpoint_no_unique = parseInt(checkpoint_no_unique)+1;
 
 		if(counter_index >= 0) {
 			checkPoints[counter_index].checkpoint_location = location_name;
@@ -257,34 +259,38 @@ function saveQRCode(counter_index, location_name, latitude, longitude) {
 			var tr_id = $('#qr_code_body tr')[counter_index].id;
 			var $row = $("#"+tr_id);
 			//$("#"+tr_id).remove();
+			console.log(tr_id)
+			var file_name = $('#'+tr_id+ ' td:eq(2) a')[1].download;
 			
 			var html = "<tr id='remove_"+or_code_id+"'>" +
 
 			"<td><img src='" + data.data + "' style='height: 79px;'></td>" +
 			"<td>" + location_name + "</td>" +
 			"<td>  <a href='#' id='"+or_code_id+"' class='btn btn-danger delete_checkpoint' style='margin-right:5px'>Delete</a>"+
-			"<a href='" + data.data + "'  class='btn btn-warning ' Download='"+location_name+".png'>Download</a></td>" +
+			"<a href='" + data.data + "'  class='btn btn-warning ' Download='"+file_name+".png'>Download</a></td>" +
 			"</tr>";
 			$row.replaceWith(html);
 			
 			//$("#qr_code_body").append(html);
 		} else {
-			checkPoints.push({
+			
+			 checkPoints.push({
 				checkpoint_location: location_name,
 				latitude: latitude,
 				lngtitude : longitude,
 				checkpoint_qr_code :data.data,
 				or_code_id:or_code_id
 			  })
-			  var html = "<tr id='remove_"+or_code_id+"'>" +
+			  saveCheckPoint('new');
+		// 	  var html = "<tr id='remove_"+or_code_id+"'>" +
 
-			  "<td><img src='" + data.data + "' style='height: 79px;'></td>" +
-			  "<td>" + location_name + "</td>" +
-			  "<td>  <a href='#' id='"+or_code_id+"' class='btn btn-danger delete_checkpoint' style='margin-right:5px'>Delete</a>"+
-			  "<a href='" + data.data + "'  class='btn btn-warning ' Download='"+location_name+".png'>Download</a>" +
-			  "</td>" +
-			  "</tr>";
-		  $("#qr_code_body").append(html);
+		// 	  "<td><img src='" + data.data + "' style='height: 79px;'></td>" +
+		// 	  "<td>" + location_name + "</td>" +
+		// 	  "<td>  <a href='#' id='"+or_code_id+"' class='btn btn-danger delete_checkpoint' style='margin-right:5px'>Delete</a>"+
+		// 	  "<a href='" + data.data + "'  class='btn btn-warning ' Download='checkpoint-"+checkpoint_no_unique+".png'>Download</a>" +
+		// 	  "</td>" +
+		// 	  "</tr>";
+		//   $("#qr_code_body").append(html);
 
 		}
    
@@ -350,6 +356,7 @@ function changeGetLocation() {
   var vehicle_id =$("#vehicle_id").val();
   var location_id =$("#location_id").val();
   var city_id =$("#city_id").val();
+  checkpoint_no_unique =$("#checkpoint_no_unique").val();
   if(vehicle_id && location_id) {
     var location = JSON.parse(location_id);
     $("#center_latitude").val(location.latitude);
@@ -374,6 +381,7 @@ function changeGetVehicle() {
   var vehicle_id =$("#vehicle_id").val();
   var location_id =$("#location_id").val();
   var city_id =$("#city_id").val();
+  checkpoint_no_unique =$("#checkpoint_no_unique").val();
   if(vehicle_id && location_id) {
     var location = JSON.parse(location_id);
     $("#showmap_and_search_").show();
@@ -404,6 +412,7 @@ function getCheckPoints(vehicle_id,city_id, location_id){
     
       var count = 0;
        res.forEach(element => {
+		 
         checkPoints.push({
           checkpoint_location: element.checkpoint_location,
           latitude: element.latitude,
@@ -418,7 +427,7 @@ function getCheckPoints(vehicle_id,city_id, location_id){
           "<td><img src='" + element.checkpoint_qr_code + "' style='height: 79px;'></td>" +
           "<td>" + element.checkpoint_location + "</td>" +
           "<td>  <a href='#' id='"+element.or_code_id+"' class='btn btn-danger delete_checkpoint' style='margin-right:5px'>Delete</a>"+
-		  "<a href='" + element.checkpoint_qr_code + "'  class='btn btn-warning ' Download='"+element.checkpoint_location.replace(/ /g,"_")+".png'>Download</a></td>" +
+		  "<a href='" + element.checkpoint_qr_code + "'  class='btn btn-warning ' Download='checkpoint-"+element.id+".png'>Download</a></td>" +
           "</tr>";
         $("#qr_code_body").append(html);
         count++;
@@ -434,7 +443,7 @@ function getCheckPoints(vehicle_id,city_id, location_id){
 	});
 }
 
-function saveCheckPoint() {
+function saveCheckPoint(flag) {
   var checkpoint_no = $("#checkpoint_no").val();
   var vehicle_id = $("#vehicle_id").val();
   var city_id = $("#city_id").val();
@@ -463,9 +472,9 @@ function saveCheckPoint() {
 		vehicle_id: vehicle_id,
 		location_id: JSON.parse(location).id,
 		city_id: city_id,
-    checkPoints:JSON.stringify(checkPoints),
-    checkpoint_id:checkpoint_id,
-    is_deleted_checkpoint_id:is_deleted_checkpoint_id
+        checkPoints:JSON.stringify(checkPoints),
+        checkpoint_id:checkpoint_id,
+        is_deleted_checkpoint_id:is_deleted_checkpoint_id
 	}
 
 	var request = $.ajax({
@@ -476,7 +485,12 @@ function saveCheckPoint() {
 	});
 
   request.done(function (data) {
-     window.location="checkpoints";
+	  if(flag=='new'){
+		 getCheckPoints(vehicle_id, city_id, JSON.parse(location).id);
+	  } else {
+		window.location="checkpoints";
+	  }
+    
   });
 
   request.fail(function (jqXHR, textStatus) {

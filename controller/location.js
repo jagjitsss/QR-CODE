@@ -209,6 +209,11 @@ module.exports.addCheckpointGet = async function (req, res, next) {
     var table1 = [`tbl_checkpoint`];
     var dbrespCheckpointNo = await dbQuery.query(query1, table1);
 
+    var queryCH = `SELECT max(id) as checkpoint_no FROM ??;`
+    var tableCH = [`tbl_checkpoint_qr_code`];
+    var dbrespCheckpointNoCH = await dbQuery.query(queryCH, tableCH);
+
+
     var queryU = `SELECT * FROM ?? `;
     var tableU = ['tbl_vehicle'];
     var dbResponseUser = await dbQuery.query(queryU, tableU);
@@ -219,7 +224,8 @@ module.exports.addCheckpointGet = async function (req, res, next) {
         title:"Manage Checkpoints",
         cities:dbrespCity,
         checkpoint_no:dbrespCheckpointNo[0]['checkpoint_no'] ? parseInt(dbrespCheckpointNo[0]['checkpoint_no']) + 1 : 1,
-        users:dbResponseUser
+        users:dbResponseUser,
+        dbrespCheckpointNoCH:dbrespCheckpointNoCH[0]['checkpoint_no'] ? parseInt(dbrespCheckpointNoCH[0]['checkpoint_no']) : 1
     }
     res.render("pages/checkpoints/add", renderPageData);
 }

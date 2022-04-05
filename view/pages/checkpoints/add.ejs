@@ -16,6 +16,8 @@
                        
                         <div class="card-body">
                             <form class="col-md-12" action="/add-checkpoint" method="post">
+                                
+                                <input type="hidden" value="<%= dbrespCheckpointNoCH%>" name="checkpoint_no_unique" id="checkpoint_no_unique">
                                 <input type="hidden" name="latitude" id="latitude">
                                 <input type="hidden" name="lngtitude" id="lngtitude">
 
