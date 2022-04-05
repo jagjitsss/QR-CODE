@@ -398,8 +398,10 @@ module.exports.getlocationLatLng = async function (req, res, next) {
     if(dbResponseVehicle.length > 0) {
         var vehicle_l = JSON.parse(dbResponseVehicle[0].lat_lng);
         console.log(vehicle_l)
-        lat_long.push(['Driver',parseFloat(vehicle_l.lat),parseFloat(vehicle_l.lng), 'yellow.png', dbrespCheckPoints.length+1])
-      }
+        if(vehicle_l){
+          lat_long.push(['Driver',parseFloat(vehicle_l.lat),parseFloat(vehicle_l.lng), 'yellow.png', dbrespCheckPoints.length+1])
+        }
+    }
     res.send({status:true, data:lat_long});
     
 }
